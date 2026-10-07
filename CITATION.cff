@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: If you use this model, please cite the thesis below.
+title: Half-car ride model in MATLAB
+type: software
+authors:
+  - family-names: Abdelazim
+    given-names: Mohammed El Said Azab
+license: MIT
+preferred-citation:
+  type: thesis
+  title: "Comfort-Aware Speed Planning over Road Anomalies: A Reinforcement-Learning Approach"
+  authors:
+    - family-names: Abdelazim
+      given-names: Mohammed El Said Azab
+  thesis-type: Bachelor's thesis
+  institution:
+    name: Technische Universität Berlin
+  year: 2026
