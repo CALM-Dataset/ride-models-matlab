@@ -25,7 +25,8 @@ end
 rectangle('Parent', ax, 'Position', [x_c - g.w_hub / 2, y_W - g.hub_h / 2, g.w_hub, g.hub_h], ...
     'FaceColor', render.scene.rgb(c.wheel_hub), 'EdgeColor', [0.2 0.2 0.2], 'LineWidth', 1.2);
 plot(ax, x_c, y_W, 'o', 'MarkerFaceColor', 'w', 'MarkerEdgeColor', 'w', 'MarkerSize', 3);
-text(ax, x_c - g.w_hub / 2 - 0.12, y_W, label, 'HorizontalAlignment', 'right', 'Color', render.scene.rgb(c.ink), 'FontSize', 10);
+st = render.scene.style();
+text(ax, x_c - g.w_hub / 2 - 0.12, y_W, label, 'HorizontalAlignment', 'right', 'FontName', st.font, 'FontSize', st.label_size + 2, 'Color', render.scene.rgb(c.ink));
 if on_obstacle
     plot(ax, x_c, y_road, 'o', 'MarkerFaceColor', render.scene.rgb(c.contact), 'MarkerEdgeColor', render.scene.rgb(c.contact), 'MarkerSize', 6);
 end

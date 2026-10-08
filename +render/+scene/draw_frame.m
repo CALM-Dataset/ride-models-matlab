@@ -17,7 +17,10 @@ z_Wr = out.z_Wr(k);
 zeta_f = halfcar.road.height(road, s);
 zeta_r = halfcar.road.height(road, s - L);
 
-xlim = [x_rear - g.xlim_left_pad - g.mb_overhang, g.xlim_right];
+pos = getpixelposition(ax);
+xrange = (g.ylim(2) - g.ylim(1)) * pos(3) / pos(4);
+x_car = (x_front + x_rear) / 2;
+xlim = [x_car - 0.32 * xrange, x_car + 0.68 * xrange];
 cla(ax);
 hold(ax, 'on');
 set(ax, 'XLim', xlim, 'YLim', g.ylim, 'DataAspectRatio', [1 1 1]);
@@ -64,10 +67,6 @@ fill(ax, [rx fx fx rx], [ry - hh, fy - hh, fy + hh, ry + hh], render.scene.rgb(c
 x_mid = (x_front + x_rear) / 2;
 y_mid = (y_Bf + y_Br) / 2;
 plot(ax, x_mid, y_mid, 'o', 'MarkerFaceColor', 'w', 'MarkerEdgeColor', 'w', 'MarkerSize', 3);
-text(ax, x_mid, max(y_Bf, y_Br) + g.h_mb / 2 + 0.12, 'body', 'HorizontalAlignment', 'center', 'Color', render.scene.rgb(c.ink), 'FontSize', 10);
 
-hud = sprintf('t %.2f s    s %.1f m    v %.1f km/h    z_B %+.1f mm    \\phi %+.2f deg', ...
-    out.t(k), s, out.v(k) * 3.6, z_B * 1000, phi * 180 / pi);
-text(ax, xlim(1) + 0.2, g.ylim(2) - 0.3, hud, 'Color', render.scene.rgb(c.ink), 'FontSize', 10, 'BackgroundColor', 'w', 'EdgeColor', [0.33 0.33 0.33]);
 hold(ax, 'off');
 end

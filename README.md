@@ -28,7 +28,7 @@ render.animate(P, road, out, 'speed', 1)
   +sim                   simulate.m
   +comfort               wk_weight.m  rms.m  a_w.m
 +render                  drawing, used as render.<package>.<function>
-  +scene                 geometry.m  colors.m  rgb.m  spring_xy.m  damper_xy.m  draw_wheel.m  draw_frame.m
+  +scene                 geometry.m  colors.m  style.m  rgb.m  spring_xy.m  damper_xy.m  draw_wheel.m  draw_frame.m  hud_create.m  hud_update.m
   +plots                 signals.m
   animate.m
 examples                 single_bump.m  animate_drive.m  compare_speed_profiles.m
