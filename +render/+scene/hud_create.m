@@ -1,10 +1,9 @@
-function h = hud_create(parent, position)
+function h = hud_create(parent, position, labels)
 st = render.scene.style();
 ax = axes('Parent', parent, 'Position', position, 'XLim', [0 1], 'YLim', [0 1]);
 axis(ax, 'off');
 hold(ax, 'on');
 rectangle('Parent', ax, 'Position', [0 0 1 1], 'FaceColor', 'w', 'EdgeColor', [0.33 0.33 0.33], 'LineWidth', 0.8);
-labels = {'$t\ [\mathrm{s}]$', '$s\ [\mathrm{m}]$', '$v\ [\mathrm{km/h}]$', '$z_B\ [\mathrm{mm}]$', '$\varphi\ [\mathrm{deg}]$'};
 n = numel(labels);
 h.values = gobjects(n, 1);
 for i = 1:n

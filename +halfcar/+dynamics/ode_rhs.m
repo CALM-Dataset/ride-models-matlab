@@ -24,6 +24,6 @@ dx(11) = x(8);
 end
 
 function [F_susp, F_tire] = axle_force(susp, susp_vel, tyre, zr_dot, zw_vel, p)
-F_susp = p.k_S * susp + halfcar.dynamics.spring_nonlin(susp, p) + halfcar.dynamics.damper(susp_vel, p);
+F_susp = p.k_S * susp + suspension.spring_nonlin(susp, p) + suspension.damper(susp_vel, p);
 F_tire = p.k_T * tyre + p.c_T * (zr_dot - zw_vel);
 end

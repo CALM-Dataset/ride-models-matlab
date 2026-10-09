@@ -1,7 +1,7 @@
 function P = load(file)
 if nargin < 1
     here = fileparts(mfilename('fullpath'));
-    file = fullfile(here, '..', '..', 'data', 'params.json');
+    file = fullfile(here, '..', '..', 'data', 'halfcar', 'params.json');
 end
 P = jsondecode(fileread(file));
 P.front = derive_axle(P.front);
