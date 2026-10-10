@@ -6,3 +6,4 @@ slprj/
 *.mp4
 *.avi
 *.png
+!docs/images/*.png

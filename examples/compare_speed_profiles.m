@@ -1,7 +1,7 @@
 model = 'halfcar';
-addpath(fullfile(fileparts(mfilename('fullpath')), '..'));
+addpath(fullfile(fileparts(mfilename('fullpath')), '..', 'src'));
 P = ride.load(model);
-road = terrain.bumps([20 0.06 2.0]);
+road = ride.core.terrain.bumps([20 0.06 2.0]);
 wheelbase = 0;
 if isfield(P, 'L')
     wheelbase = P.L;
@@ -12,5 +12,5 @@ names = {'constant', 'dip before the bump'};
 for i = 1:numel(profiles)
     out = ride.simulate(model, P, road, profiles{i});
     k = min([find(out.s >= 22 + wheelbase, 1), numel(out.t)]);
-    fprintf('%-20s travel time %.2f s   weighted RMS %.3f m/s^2\n', names{i}, out.t(k), comfort.a_w(out.z_B_ddot(1:k), P.DT));
+    fprintf('%-20s travel time %.2f s   weighted RMS %.3f m/s^2\n', names{i}, out.t(k), ride.core.comfort.a_w(out.z_B_ddot(1:k), P.DT));
 end
