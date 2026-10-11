@@ -3,6 +3,7 @@ here = fileparts(mfilename('fullpath'));
 addpath(fullfile(here, '..', 'src'));
 addpath(genpath(here));
 test_wk_weighting();
+test_config();
 test_halfcar_reference();
 test_halfcar_equilibrium_and_scaling();
 test_quartercar_reference();

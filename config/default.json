@@ -1,0 +1,15 @@
+{
+  "model": "halfcar",
+  "road": {
+    "bumps": [
+      {"start_m": 20.0, "height_m": 0.06, "length_m": 2.0}
+    ]
+  },
+  "profiles": {
+    "constant": {"type": "constant", "speed_mps": 6.0},
+    "dip": {"type": "dip", "speed_mps": 6.0, "depth_mps": 3.0, "center_s": 3.5, "width_s": 1.0}
+  },
+  "drive": {"duration_s": 14.0, "profile": "dip"},
+  "compare": {"profiles": ["constant", "dip"], "duration_s": 18.0},
+  "render": {"speed": 1.0, "fps": 30, "frame_at_s": 3.5, "video": ""}
+}

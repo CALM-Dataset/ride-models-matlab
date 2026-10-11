@@ -1,16 +1,16 @@
-model = 'halfcar';
-addpath(fullfile(fileparts(mfilename('fullpath')), '..', 'src'));
-P = ride.load(model);
-road = ride.core.terrain.bumps([20 0.06 2.0]);
-wheelbase = 0;
-if isfield(P, 'L')
-    wheelbase = P.L;
-end
-t = (1:900)' * P.DT;
-profiles = {6 * ones(size(t)), 6 - 3 * exp(-((t - 3.5) .^ 2) / 2)};
-names = {'constant', 'dip before the bump'};
-for i = 1:numel(profiles)
-    out = ride.simulate(model, P, road, profiles{i});
-    k = min([find(out.s >= 22 + wheelbase, 1), numel(out.t)]);
-    fprintf('%-20s travel time %.2f s   weighted RMS %.3f m/s^2\n', names{i}, out.t(k), ride.core.comfort.a_w(out.z_B_ddot(1:k), P.DT));
+run(fullfile(fileparts(mfilename('fullpath')), '..', 'setup.m'));
+cfg = ride.config();
+cfg.drive.duration_s = cfg.compare.duration_s;
+names = cfg.compare.profiles;
+for i = 1:numel(names)
+    cfg.drive.profile = names{i};
+    r = ride.scenario.run(cfg);
+    wheelbase = 0;
+    if isfield(r.P, 'L')
+        wheelbase = r.P.L;
+    end
+    road_end = max(r.road.bumps(:, 1) + r.road.bumps(:, 3)) + wheelbase;
+    k = min([find(r.out.s >= road_end, 1), numel(r.out.t)]);
+    fprintf('%-12s travel time %.2f s   weighted RMS %.3f m/s^2\n', names{i}, r.out.t(k), ...
+        ride.core.comfort.a_w(r.out.z_B_ddot(1:k), r.P.DT));
 end

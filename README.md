@@ -13,27 +13,37 @@ Comfort is the ISO 2631-1 weighted RMS of the body acceleration, `a_w`.
 
 ```matlab
 setup
-model = 'halfcar';                                % or 'quartercar'
-P     = ride.load(model);
-road  = ride.core.terrain.bumps([20 0.06 2.0]);   % start, height, length in m
-v     = 6 * ones(700, 1);                         % speed per 20 ms step in m/s
-out   = ride.simulate(model, P, road, v);
-ride.core.comfort.a_w(out.z_B_ddot, P.DT)
-ride.render.animate(P, road, out)
+cfg = ride.config();                 % reads config/default.json
+r   = ride.scenario.run(cfg);        % model, road and speed profile from the config
+ride.core.comfort.a_w(r.out.z_B_ddot, r.P.DT)
+ride.render.animate(r.P, r.road, r.out)
 ```
 
-The speed profile is yours to choose: constant, a dip before the bump, or whatever a planner recommends. The model returns the ride.
+## Change anything in one place
+
+Everything the examples use lives in `config/default.json`:
+
+| Key | What |
+| --- | --- |
+| `model` | `halfcar` or `quartercar` |
+| `road.bumps` | list of `start_m`, `height_m`, `length_m` |
+| `profiles` | named speed profiles, `constant` or `dip` |
+| `drive` | which profile to drive, and for how long |
+| `compare` | profiles and duration for the comparison script |
+| `render` | playback speed, frame rate, the moment `show_frame` captures, video file |
+
+Overrides work from code too: `ride.config('model', 'quartercar', 'render.speed', 2)`. Pass a file name first to load your own config.
 
 ## Examples
 
-Set `model` at the top of each script.
+Each script is a few lines on top of the config.
 
 | Script | Does |
 | --- | --- |
 | `single_bump` | weighted RMS and the time-series charts |
 | `show_frame` | one frame with header and charts, saved as `<model>_frame.png` |
-| `animate_drive` | a drive with a dip before the bump |
-| `compare_speed_profiles` | travel time and `a_w` for two speed profiles |
+| `animate_drive` | the animated drive |
+| `compare_speed_profiles` | travel time and `a_w` for each profile in `compare` |
 
 ## Tests
 
@@ -45,14 +55,21 @@ run('tests/run_tests.m')
 - Both models are replayed against reference runs from an independent implementation of the same equations.
 - A flat road must give no acceleration, and a taller bump must be less comfortable.
 - The Wk filter must reject a constant offset and weight 4 Hz above 0.1 Hz.
+- Config overrides must work and speed profiles must behave.
+
+## Simulink
+
+`simulink/build_quartercar.m` builds the quarter-car as a Simulink model. `run('simulink/test_quartercar_simulink.m')` builds it for each reference case, simulates it with a fixed-step solver at 1 ms, and compares the body acceleration with the reference. The half-car model follows once this passes.
 
 ## Layout
 
 ```
 ride-models-matlab
 ├── setup.m
+├── config                   default.json
 ├── src/+ride
-│   ├── load  simulate  root
+│   ├── load  simulate  root  config
+│   ├── +scenario            speeds  build  run
 │   ├── +core
 │   │   ├── +terrain         bumps  height  height_dot
 │   │   ├── +comfort         wk_weight  rms  a_w
@@ -70,6 +87,7 @@ ride-models-matlab
 │   ├── halfcar              params.json  reference/
 │   └── quartercar           params.json  reference/
 ├── tests                    run_tests.m  core/  models/
+├── simulink                 build_quartercar  road_velocity_input  test_quartercar_simulink
 ├── examples
 └── docs/images
 ```

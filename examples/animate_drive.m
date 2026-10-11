@@ -1,8 +1,4 @@
-model = 'halfcar';
-addpath(fullfile(fileparts(mfilename('fullpath')), '..', 'src'));
-P = ride.load(model);
-road = ride.core.terrain.bumps([20 0.06 2.0]);
-t = (1:700)' * P.DT;
-speeds = 6 - 3 * exp(-((t - 3.5) .^ 2) / 2);
-out = ride.simulate(model, P, road, speeds);
-ride.render.animate(P, road, out, 'speed', 1);
+run(fullfile(fileparts(mfilename('fullpath')), '..', 'setup.m'));
+cfg = ride.config();
+r = ride.scenario.run(cfg);
+ride.render.animate(r.P, r.road, r.out, 'speed', cfg.render.speed, 'fps', cfg.render.fps, 'video', cfg.render.video);

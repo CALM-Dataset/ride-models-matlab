@@ -2,7 +2,7 @@ function axes_out = signals(road, out, parent, region)
 c = ride.render.scene.colors();
 st = ride.render.scene.style();
 if nargin < 3
-    parent = figure('Color', 'w');
+    parent = ride.render.scene.light_figure([100 100 1200 650]);
 end
 if nargin < 4
     region = [0.08 0.08 0.86 0.88];
@@ -33,19 +33,21 @@ for i = 1:n
             patch(ax, [bump_t(b, 1) bump_t(b, 2) bump_t(b, 2) bump_t(b, 1)], [yl(1) yl(1) yl(2) yl(2)], [0.75 0.75 0.75], 'FaceAlpha', 0.35, 'EdgeColor', 'none', 'HandleVisibility', 'off');
         end
     end
-    set(ax, 'YLim', yl, 'XLim', [0 t(end)], 'Box', 'off', 'FontName', st.font, 'FontSize', st.size, 'TickDir', 'out', 'Layer', 'top');
-    ylabel(ax, p.label, 'Interpreter', 'latex', 'FontSize', st.size + 2);
+    ink = ride.render.scene.rgb(c.ink);
+    set(ax, 'YLim', yl, 'XLim', [0 t(end)], 'Box', 'off', 'FontName', st.font, 'FontSize', st.size, 'TickDir', 'out', 'Layer', 'top', ...
+        'Color', 'w', 'XColor', ink, 'YColor', ink, 'GridColor', ink);
+    ylabel(ax, p.label, 'Interpreter', 'latex', 'FontSize', st.size + 2, 'Color', ink);
     if numel(p.data) > 1
-        legend(ax, 'show', 'Interpreter', 'latex', 'Location', 'northeast', 'Orientation', 'horizontal', 'Box', 'off', 'FontSize', st.size);
+        legend(ax, 'show', 'Interpreter', 'latex', 'Location', 'northeast', 'Orientation', 'horizontal', 'Box', 'off', 'FontSize', st.size, 'TextColor', ink);
     end
     grid(ax, 'on');
-    set(ax, 'GridAlpha', 0.2);
+    set(ax, 'GridAlpha', 0.2, 'GridColor', ink);
     if i < n
         set(ax, 'XTickLabel', []);
     end
     axes_out(i) = ax;
 end
-xlabel(axes_out(end), '$t\ [\mathrm{s}]$', 'Interpreter', 'latex', 'FontSize', st.size + 2);
+xlabel(axes_out(end), '$t\ [\mathrm{s}]$', 'Interpreter', 'latex', 'FontSize', st.size + 2, 'Color', ride.render.scene.rgb(c.ink));
 linkaxes(axes_out, 'x');
 end
 

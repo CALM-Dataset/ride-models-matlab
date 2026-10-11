@@ -1,5 +1,5 @@
 function [update, fig] = frame_figure(P, road, out)
-fig = figure('Color', 'w', 'Position', [100 100 1200 900]);
+fig = ride.render.scene.light_figure([100 100 1200 900]);
 switch out.model
     case 'halfcar'
         labels = {'$t\ [\mathrm{s}]$', '$s\ [\mathrm{m}]$', '$v\ [\mathrm{km/h}]$', '$z_B\ [\mathrm{mm}]$', '$\varphi\ [\mathrm{deg}]$'};
@@ -15,10 +15,19 @@ cursors = gobjects(numel(axes_ts), 1);
 for i = 1:numel(axes_ts)
     cursors(i) = line(axes_ts(i), [0 0], get(axes_ts(i), 'YLim'), 'Color', [0.2 0.2 0.2], 'LineWidth', 1, 'HandleVisibility', 'off');
 end
-update = @(k) refresh(P, road, out, k, ax_scene, hud, cursors);
+update = @(k) refresh(fig, P, road, out, k, ax_scene, hud, cursors);
+set(fig, 'SizeChangedFcn', @(~, ~) redraw(fig, P, road, out, ax_scene, hud, cursors));
+drawnow;
 end
 
-function refresh(P, road, out, k, ax_scene, hud, cursors)
+function redraw(fig, P, road, out, ax_scene, hud, cursors)
+if isappdata(fig, 'last_frame')
+    refresh(fig, P, road, out, getappdata(fig, 'last_frame'), ax_scene, hud, cursors);
+end
+end
+
+function refresh(fig, P, road, out, k, ax_scene, hud, cursors)
+setappdata(fig, 'last_frame', k);
 feval(['ride.render.' out.model '.frame'], ax_scene, P, road, out, k);
 mm = @(x) sprintf('%+.1f', x * 1000);
 switch out.model
