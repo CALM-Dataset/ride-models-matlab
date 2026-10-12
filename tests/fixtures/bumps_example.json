@@ -1,0 +1,17 @@
+{
+  "name": "two_ramps",
+  "description": "two bumps in the custom format",
+  "speed_mps": 5.0,
+  "bumps": [
+    {
+      "start_m": 10.0,
+      "height_m": 0.05,
+      "length_m": 1.5
+    },
+    {
+      "start_m": 30.0,
+      "height_m": -0.04,
+      "length_m": 0.8
+    }
+  ]
+}

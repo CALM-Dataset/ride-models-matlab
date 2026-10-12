@@ -1,0 +1,284 @@
+{
+  "source": "Azab Abdelazim, M. (2026), Comfort-Aware Speed Planning over Road Anomalies: A Reinforcement-Learning Approach, TU Berlin, Tab. 3.3 (bump sizes) and Tab. 3.4 (pothole severity)",
+  "defaults": {
+    "flat_start_m": 40.0,
+    "gap_m": 30.0,
+    "speed_kmh": 30.0
+  },
+  "bumps": {
+    "s": {
+      "name": "short_bump",
+      "height_m": 0.025,
+      "width_m": 0.92
+    },
+    "m": {
+      "name": "medium_bump",
+      "height_m": 0.0625,
+      "width_m": 2.22
+    },
+    "l": {
+      "name": "long_bump",
+      "height_m": 0.125,
+      "width_m": 9.5
+    },
+    "c": {
+      "name": "raised_crosswalk",
+      "height_m": 0.1,
+      "width_m": 5.0
+    },
+    "sv": {
+      "name": "severe_bump",
+      "height_m": 0.1,
+      "width_m": 1.0
+    }
+  },
+  "potholes": {
+    "pothole_critical": {
+      "depth_m": 0.1,
+      "width_m": 1.2
+    },
+    "pothole_minor": {
+      "depth_m": 0.015,
+      "width_m": 0.3
+    },
+    "pothole_moderate": {
+      "depth_m": 0.04,
+      "width_m": 0.6
+    },
+    "pothole_severe": {
+      "depth_m": 0.07,
+      "width_m": 0.9
+    },
+    "pothole_shallow": {
+      "depth_m": 0.025,
+      "width_m": 0.4
+    }
+  },
+  "suites": [
+    {
+      "suite": "01_single_bump",
+      "keys": [
+        "c",
+        "l",
+        "m",
+        "s",
+        "sv"
+      ]
+    },
+    {
+      "suite": "02_two_bumps",
+      "keys": [
+        "c_c",
+        "l_c",
+        "l_l",
+        "m_c",
+        "m_l",
+        "m_m",
+        "m_sv",
+        "s_c",
+        "s_l",
+        "s_m",
+        "s_s",
+        "s_sv",
+        "sv_c",
+        "sv_l",
+        "sv_sv"
+      ]
+    },
+    {
+      "suite": "03_three_bumps",
+      "keys": [
+        "c_c_c",
+        "l_c_c",
+        "l_l_c",
+        "l_l_l",
+        "m_c_c",
+        "m_l_c",
+        "m_l_l",
+        "m_m_c",
+        "m_m_l",
+        "m_m_m",
+        "m_m_sv",
+        "m_sv_c",
+        "m_sv_l",
+        "m_sv_sv",
+        "s_c_c",
+        "s_l_c",
+        "s_l_l",
+        "s_m_c",
+        "s_m_l",
+        "s_m_m",
+        "s_m_sv",
+        "s_s_c",
+        "s_s_l",
+        "s_s_m",
+        "s_s_s",
+        "s_s_sv",
+        "s_sv_c",
+        "s_sv_l",
+        "s_sv_sv",
+        "sv_c_c",
+        "sv_l_c",
+        "sv_l_l",
+        "sv_sv_c",
+        "sv_sv_l",
+        "sv_sv_sv"
+      ]
+    },
+    {
+      "suite": "04_four_bumps",
+      "keys": [
+        "c_c_c_c",
+        "l_c_c_c",
+        "l_l_c_c",
+        "l_l_l_c",
+        "l_l_l_l",
+        "m_c_c_c",
+        "m_l_c_c",
+        "m_l_l_c",
+        "m_l_l_l",
+        "m_m_c_c",
+        "m_m_l_c",
+        "m_m_l_l",
+        "m_m_m_c",
+        "m_m_m_l",
+        "m_m_m_m",
+        "m_m_m_sv",
+        "m_m_sv_c",
+        "m_m_sv_l",
+        "m_m_sv_sv",
+        "m_sv_c_c",
+        "m_sv_l_c",
+        "m_sv_l_l",
+        "m_sv_sv_c",
+        "m_sv_sv_l",
+        "m_sv_sv_sv",
+        "s_c_c_c",
+        "s_l_c_c",
+        "s_l_l_c",
+        "s_l_l_l",
+        "s_m_c_c",
+        "s_m_l_c",
+        "s_m_l_l",
+        "s_m_m_c",
+        "s_m_m_l",
+        "s_m_m_m",
+        "s_m_m_sv",
+        "s_m_sv_c",
+        "s_m_sv_l",
+        "s_m_sv_sv",
+        "s_s_c_c",
+        "s_s_l_c",
+        "s_s_l_l",
+        "s_s_m_c",
+        "s_s_m_l",
+        "s_s_m_m",
+        "s_s_m_sv",
+        "s_s_s_c",
+        "s_s_s_l",
+        "s_s_s_m",
+        "s_s_s_s",
+        "s_s_s_sv",
+        "s_s_sv_c",
+        "s_s_sv_l",
+        "s_s_sv_sv",
+        "s_sv_c_c",
+        "s_sv_l_c",
+        "s_sv_l_l",
+        "s_sv_sv_c",
+        "s_sv_sv_l",
+        "s_sv_sv_sv",
+        "sv_c_c_c",
+        "sv_l_c_c",
+        "sv_l_l_c",
+        "sv_l_l_l",
+        "sv_sv_c_c",
+        "sv_sv_l_c",
+        "sv_sv_l_l",
+        "sv_sv_sv_c",
+        "sv_sv_sv_l",
+        "sv_sv_sv_sv"
+      ]
+    },
+    {
+      "suite": "05_one_bump_one_hole",
+      "keys": [
+        "c_hc",
+        "c_hl",
+        "c_hm",
+        "c_hs",
+        "c_hsv",
+        "l_hc",
+        "l_hl",
+        "l_hm",
+        "l_hs",
+        "l_hsv",
+        "m_hc",
+        "m_hl",
+        "m_hm",
+        "m_hs",
+        "m_hsv",
+        "s_hc",
+        "s_hl",
+        "s_hm",
+        "s_hs",
+        "s_hsv",
+        "sv_hc",
+        "sv_hl",
+        "sv_hm",
+        "sv_hs",
+        "sv_hsv"
+      ]
+    },
+    {
+      "suite": "06_two_bumps_one_hole",
+      "keys": [
+        "c_c_hc",
+        "l_c_hl",
+        "l_l_hl",
+        "m_c_hm",
+        "m_l_hm",
+        "m_m_hm",
+        "m_sv_hm",
+        "s_c_hs",
+        "s_l_hs",
+        "s_m_hs",
+        "s_s_hs",
+        "s_sv_hs",
+        "sv_c_hsv",
+        "sv_l_hsv",
+        "sv_sv_hsv"
+      ]
+    },
+    {
+      "suite": "07_two_bumps_two_holes",
+      "keys": [
+        "c_c_hc_hc",
+        "l_c_hl_hc",
+        "l_l_hl_hl",
+        "m_c_hm_hc",
+        "m_l_hm_hl",
+        "m_m_hm_hm",
+        "m_sv_hm_hsv",
+        "s_c_hs_hc",
+        "s_l_hs_hl",
+        "s_m_hs_hm",
+        "s_s_hs_hs",
+        "s_sv_hs_hsv",
+        "sv_c_hsv_hc",
+        "sv_l_hsv_hl",
+        "sv_sv_hsv_hsv"
+      ]
+    },
+    {
+      "suite": "08_potholes",
+      "keys": [
+        "pothole_critical",
+        "pothole_minor",
+        "pothole_moderate",
+        "pothole_severe",
+        "pothole_shallow"
+      ]
+    }
+  ]
+}
