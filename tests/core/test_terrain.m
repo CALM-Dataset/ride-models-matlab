@@ -18,7 +18,7 @@ hole = ride.core.terrain.bumps([5 -0.05 1.0]);
 assert(ride.core.terrain.height(hole, 5.5) < 0, 'a negative height must be a hole');
 assert(ride.core.terrain.end_point(analytic, 2.5) == 12 + 2.5, 'the trip ends one wheelbase after the last bump');
 assert(ride.core.terrain.end_point(sampled, 2.5) > 30, 'the trip on a profile ends beyond the measured road');
-for model = {'halfcar', 'quartercar'}
+for model = ride.models.list()
     P = ride.load(model{1});
     speeds = 6 * ones(round(8 / P.DT), 1);
     a = ride.simulate(model{1}, P, analytic, speeds);

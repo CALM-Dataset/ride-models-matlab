@@ -8,7 +8,7 @@ if nargin < 4
     region = [0.08 0.08 0.86 0.88];
 end
 t = out.t;
-panels = panel_definitions(out, c);
+panels = ride.models.get(out.model).panels(out);
 n = numel(panels);
 gap = 0.018;
 height = (region(4) - gap * (n - 1)) / n;
@@ -49,24 +49,4 @@ for i = 1:n
 end
 xlabel(axes_out(end), '$t\ [\mathrm{s}]$', 'Interpreter', 'latex', 'FontSize', st.size + 2, 'Color', ride.render.scene.rgb(c.ink));
 linkaxes(axes_out, 'x');
-end
-
-function panels = panel_definitions(out, c)
-speed = struct('data', {{out.v * 3.6}}, 'color', {{c.speed}}, 'style', {{'-'}}, 'name', {{'$v$'}}, 'label', '$v\ [\mathrm{km/h}]$');
-accel = struct('data', {{out.z_B_ddot}}, 'color', {{c.accel}}, 'style', {{'-'}}, 'name', {{'$\ddot{z}_B$'}}, 'label', '$\ddot{z}_B\ [\mathrm{m/s^2}]$');
-switch out.model
-    case 'halfcar'
-        heave = struct('data', {{out.z_B * 100, out.z_Wf * 100, out.z_Wr * 100}}, ...
-            'color', {{c.z_body, c.z_wf, c.z_wr}}, 'style', {{'-', '--', ':'}}, ...
-            'name', {{'$z_B$', '$z_{W,f}$', '$z_{W,r}$'}}, 'label', '$z\ [\mathrm{cm}]$');
-        pitch = struct('data', {{out.phi * 180 / pi}}, 'color', {{c.phi}}, 'style', {{'-'}}, ...
-            'name', {{'$\varphi$'}}, 'label', '$\varphi\ [\mathrm{deg}]$');
-        panels = {heave, pitch, speed, accel};
-    case 'quartercar'
-        heave = struct('data', {{out.z_B * 100, out.z_W * 100}}, 'color', {{c.z_body, c.z_wf}}, ...
-            'style', {{'-', '--'}}, 'name', {{'$z_B$', '$z_W$'}}, 'label', '$z\ [\mathrm{cm}]$');
-        panels = {heave, speed, accel};
-    otherwise
-        error('render:unknownModel', 'unknown model "%s"', out.model);
-end
 end

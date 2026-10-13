@@ -1,5 +1,5 @@
 function frame(ax, P, road, out, k)
-g = ride.render.scene.geometry('halfcar');
+g = ride.models.halfcar.view.geometry();
 c = ride.render.scene.colors();
 L = P.L;
 ys = g.y_scale;

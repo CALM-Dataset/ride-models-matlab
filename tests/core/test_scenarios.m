@@ -42,6 +42,10 @@ assert(row(1) >= 0 && row(1) + row(3) <= (numel(z) - 1) * sc.road.ds, 'the label
 untrimmed = ride.scenarios.real.parse(jsondecode(fileread(fullfile(fixtures, 'profile_example.json'))), 'trim', false);
 assert(numel(untrimmed.road.z) == 601, 'trim can be switched off');
 
+marked = jsondecode(fileread(fullfile(fixtures, 'profile_example.json')));
+marked.meta.trim = struct('offset_m', 0);
+assert(numel(ride.scenarios.real.parse(marked).road.z) == 601, 'a file marked as trimmed must not be trimmed again');
+
 custom = ride.scenarios.get(['file:' fullfile(fixtures, 'bumps_example.json')]);
 assert(strcmp(custom.name, 'two_ramps') && custom.speed_mps == 5.0, 'a custom file may name itself and suggest a speed');
 assert(custom.road.bumps(2, 2) < 0, 'a custom hole must stay a hole');

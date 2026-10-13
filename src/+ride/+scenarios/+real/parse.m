@@ -16,7 +16,8 @@ if isfield(d, 'bumps') && ~isempty(d.bumps)
 end
 first = 1;
 last = numel(z);
-if opts.trim
+pretrimmed = isfield(d, 'meta') && isfield(d.meta, 'trim');
+if opts.trim && ~pretrimmed
     [first, last] = ride.scenarios.real.trim_edges(z, ds, starts, ends, opts.tol_m, opts.margin_m);
 end
 offset = (first - 1) * ds;
