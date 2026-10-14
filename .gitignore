@@ -8,3 +8,4 @@ slprj/
 *.png
 !docs/images/*.png
 data/cache/
+dist/
