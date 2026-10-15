@@ -3,10 +3,13 @@
   "scenario": "synthetic:m",
   "profiles": {
     "constant": {"type": "constant", "speed_mps": "scenario"},
-    "dip": {"type": "dip_at_bump", "speed_mps": "scenario", "depth_mps": 3.0, "lead_m": 8.0, "width_s": 1.0}
+    "dip": {"type": "dip_at_bump", "speed_mps": "scenario", "depth_mps": 3.0, "lead_m": 8.0, "width_s": 1.0},
+    "reactive": {"type": "reactive", "speed_mps": "scenario"},
+    "mpc": {"type": "mpc"},
+    "human": {"type": "human"}
   },
   "drive": {"profile": "dip", "duration_s": "auto"},
   "metrics": ["a_w", "vdv", "peak_acc", "travel_time", "mean_speed"],
-  "compare": {"profiles": ["constant", "dip"]},
+  "compare": {"profiles": ["constant", "dip", "reactive"]},
   "render": {"speed": 1.0, "fps": 30, "frame_at": "bump", "video": ""}
 }

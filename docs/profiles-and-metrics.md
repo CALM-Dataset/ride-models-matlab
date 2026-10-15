@@ -10,8 +10,21 @@ A profile is a struct with a `type` and its parameters. `ride.profiles.speeds(pr
 | `dip` | `speed_mps`, `depth_mps`, `center_s`, `width_s` |
 | `dip_at_bump` | `speed_mps`, `depth_mps`, `lead_m`, `width_s`: a dip centred `lead_m` before the first feature |
 | `ramp` | `from_mps`, `to_mps`, `start_s`, `duration_s` |
+| `reactive` | `speed_mps`, `v_min_mps`, `preview_m`, `steep_full_slow`, `hole_severity`, `brake_margin`, `a_brake`, `a_accel`: a rule-based driver that brakes early enough to cross each bump at a speed set by its steepness, then speeds up again |
+| `mpc` | recorded speeds of the model predictive planner for the scenario |
+| `human` | recorded speeds of the human drive on the scenario |
+| `recorded` | `source`: the same for any source in a profile file |
 | `table` | `t_s`, `v_mps`: interpolated points, for a recommended speed from a planner |
 | `handle` | `fn`: a function of time, from code only |
+
+`mpc`, `human` and `recorded` replay a profile file. Pass one with the `file` field, or let the profile library find the file of the scenario by name: `ride.profiles.library.sync('stuttgart_sb01')` downloads `profiles/<scenario>.json` from the scenarios dataset into the cache, and `ride.profiles.library.list()` shows what is cached. Recorded profiles exist for the real scenarios only. A file looks like this, with the speed at every `dt_s`:
+
+```json
+{"name": "stuttgart_sb01", "dt_s": 0.02,
+ "sources": {"mpc": {"v_mps": [8.3, 8.3, 8.2]}, "human": {"v_mps": [7.1, 7.2, 7.2]}}}
+```
+
+A profile shorter than the drive holds its last speed, and one with a different time step is resampled. The reactive driver is deterministic, runs on any scenario, and matches the rule-based baseline of the original study speed for speed.
 
 Add a type for the session:
 

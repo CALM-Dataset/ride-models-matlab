@@ -20,6 +20,27 @@ table_v = ride.profiles.speeds(struct('type', 'table', 't_s', [0 2 4], 'v_mps', 
 assert(abs(table_v(100) - 6) < 0.1 && abs(table_v(1) - 3) < 0.1, 'a table profile must interpolate its points');
 handled = ride.profiles.speeds(struct('type', 'handle', 'fn', @(t) 5 + 0 * t), dt, 10, sc);
 assert(all(handled == 5), 'a function profile must follow its function');
+sv = ride.scenarios.get('synthetic:sv');
+s_ = ride.scenarios.get('synthetic:s');
+flat_speeds = ride.profiles.speeds(struct('type', 'reactive'), dt, 1000, flat_road);
+assert(all(abs(flat_speeds - flat_road.speed_mps) < 1e-12), 'the reactive driver must hold speed on a flat road');
+severe = ride.profiles.speeds(struct('type', 'reactive'), dt, 1500, sv);
+mild = ride.profiles.speeds(struct('type', 'reactive'), dt, 1500, s_);
+assert(max(severe) <= sv.speed_mps + 1e-12 && min(severe) >= 8 / 3.6 - 1e-12, 'the reactive driver must stay within its speed limits');
+assert(min(severe) < min(mild) && min(mild) < sv.speed_mps, 'a steeper bump must be taken slower');
+assert(abs(severe(end) - sv.speed_mps) < 1e-12, 'the reactive driver must speed up again after the bump');
+hole = ride.profiles.speeds(struct('type', 'reactive'), dt, 1500, ride.scenarios.get('synthetic:hs'));
+assert(min(hole) < ride.scenarios.get('synthetic:hs').speed_mps, 'the reactive driver must also slow for a hole');
+fixture = fullfile(fileparts(mfilename('fullpath')), '..', 'fixtures', 'recorded_profile.json');
+recorded = jsondecode(fileread(fixture));
+human = ride.profiles.speeds(struct('type', 'human', 'file', fixture), dt, 150, sc);
+assert(max(abs(human(1:100) - recorded.sources.human.v_mps)) < 1e-12, 'a recorded profile must replay its samples');
+assert(all(human(101:end) == human(100)), 'a recorded profile must hold its last speed after it ends');
+coarse = ride.profiles.speeds(struct('type', 'recorded', 'source', 'mpc', 'file', fixture), 2 * dt, 40, sc);
+assert(max(abs(coarse - recorded.sources.mpc.v_mps(2:2:80))) < 1e-12, 'a recorded profile must resample to another time step');
+mpc_v = ride.profiles.speeds(struct('type', 'mpc', 'file', fixture), dt, 10, sc);
+assert(max(abs(mpc_v - recorded.sources.mpc.v_mps(1:10))) < 1e-12, 'the mpc type must read the mpc source');
+assert(throws(@() ride.profiles.speeds(struct('type', 'recorded', 'source', 'ppo', 'file', fixture), dt, 10, sc)), 'a missing source must be an error');
 ride.profiles.register('double', @(p, dt, n, sc) 2 * p.speed_mps * ones(n, 1));
 assert(all(ride.profiles.speeds(struct('type', 'double', 'speed_mps', 3), dt, 5, sc) == 6), 'a registered profile type must be usable');
 assert(any(strcmp(ride.profiles.list(), 'double')), 'a registered profile type must be listed');
@@ -30,4 +51,13 @@ catch
     failed = true;
 end
 assert(failed, 'an unknown profile type must be an error');
+end
+
+function tf = throws(fn)
+tf = false;
+try
+    fn();
+catch
+    tf = true;
+end
 end

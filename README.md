@@ -17,7 +17,7 @@ ride.render.animate(r.P, r.road, r.out)
 | --- | --- |
 | **Models** | quarter-car (6 states) and half-car with pitch (11 states) |
 | **Scenarios** | 185 synthetic roads from a size-code catalog, 159 measured roads from Hugging Face, your own files or functions |
-| **Speed profiles** | constant, dip before the bump, ramp, table, or any function |
+| **Speed profiles** | constant, reactive driver, recorded MPC and human drives, dip before the bump, ramp, table, or any function |
 | **Metrics** | ISO 2631-1 weighted RMS `a_w`, `vdv`, peaks, trip time, pitch and suspension travel |
 | **Views** | animated scene with charts, one-frame export, video |
 
