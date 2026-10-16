@@ -3,6 +3,6 @@ labels = {'$t\ [\mathrm{s}]$', '$s\ [\mathrm{m}]$', '$v\ [\mathrm{km/h}]$', '$z_
 values = {};
 if nargin > 1
     values = {sprintf('%.2f', out.t(k)), sprintf('%.1f', out.s(k)), sprintf('%.1f', out.v(k) * 3.6), ...
-        sprintf('%+.1f', out.z_B(k) * 1000), sprintf('%+.1f', out.z_W(k) * 1000)};
+        ride.render.scene.signed_text(out.z_B(k) * 1000, 1), ride.render.scene.signed_text(out.z_W(k) * 1000, 1)};
 end
 end

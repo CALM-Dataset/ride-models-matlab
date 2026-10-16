@@ -8,4 +8,5 @@ g.pist_h = 0.18;
 g.lower_stem = 0.12;
 g.cyl_h_susp = 0.53;
 g.cyl_h_tire = 0.48;
+g.ylim = [0.55 3.9];
 end
