@@ -1,4 +1,6 @@
 function sc = from_file(path, varargin)
+%FROM_FILE A scenario from a JSON file with a bump list or a measured profile.
+%   See docs/scenarios.md for the two layouts.
 d = jsondecode(fileread(path));
 if isfield(d, 'road') && isfield(d.road, 'ds_m')
     sc = ride.scenarios.real.parse(d, varargin{:});

@@ -51,6 +51,7 @@ assert(strcmp(custom.name, 'two_ramps') && custom.speed_mps == 5.0, 'a custom fi
 assert(custom.road.bumps(2, 2) < 0, 'a custom hole must stay a hole');
 
 ride.scenarios.register('test_ramp', @() ride.scenarios.make('test_ramp', ride.core.terrain.bumps([5 0.03 1])));
+registered = onCleanup(@() ride.scenarios.unregister('test_ramp'));
 assert(strcmp(ride.scenarios.get('registered:test_ramp').name, 'test_ramp'), 'a registered scenario must be retrievable');
 assert(any(strcmp(ride.scenarios.list('registered'), 'test_ramp')), 'a registered scenario must be listed');
 inline = ride.scenarios.get(struct('bumps', struct('start_m', 3, 'height_m', 0.02, 'length_m', 1)));

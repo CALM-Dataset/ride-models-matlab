@@ -1,4 +1,5 @@
 function zd = height_dot(road, s, v)
+%HEIGHT_DOT Rate of change of the road height under a wheel at distance s and speed v, in m/s.
 switch road.type
     case 'bumps'
         zd = 0;

@@ -1,4 +1,5 @@
 function k = frame_index(r, when)
+%FRAME_INDEX Step of a run at a time in seconds, or "bump" for the first bump.
 if ischar(when) || isstring(when)
     switch char(when)
         case 'bump'

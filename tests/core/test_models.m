@@ -8,6 +8,7 @@ for i = 1:numel(names)
     assert(strcmp(out.model, names{i}), 'the output must name its model');
 end
 ride.models.register('quartercar_copy', @() ride.models.get('quartercar'));
+registered = onCleanup(@() ride.models.unregister('quartercar_copy'));
 assert(any(strcmp(ride.models.list(), 'quartercar_copy')), 'a registered model must be listed');
 ride.models.validate('quartercar_copy');
 try
@@ -17,4 +18,6 @@ catch
     failed = true;
 end
 assert(failed, 'an unknown model must be an error');
+ride.models.unregister('quartercar_copy');
+assert(~any(strcmp(ride.models.list(), 'quartercar_copy')), 'an unregistered model must leave the list');
 end

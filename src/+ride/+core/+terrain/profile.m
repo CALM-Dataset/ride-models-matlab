@@ -1,4 +1,7 @@
 function road = profile(z, ds, bumps)
+%PROFILE A road from heights sampled every ds metres.
+%   road = ride.core.terrain.profile(z, ds, bumps) where the optional bumps
+%   label features as [start height length] rows.
 if nargin < 3
     bumps = zeros(0, 3);
 end

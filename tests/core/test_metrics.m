@@ -21,6 +21,7 @@ end
 everything = ride.metrics.evaluate(a, P, sc, ride.metrics.list());
 assert(isfield(everything, 'a_w'), 'every listed metric must evaluate');
 ride.metrics.register('twice_peak', @(out, P, sc) 2 * max(abs(out.z_B_ddot)));
+registered = onCleanup(@() ride.metrics.unregister('twice_peak'));
 mine = ride.metrics.evaluate(a, P, sc, {'twice_peak', 'peak_acc'});
 assert(abs(mine.twice_peak - 2 * mine.peak_acc) < 1e-12, 'a registered metric must run beside the built-ins');
 try

@@ -14,4 +14,5 @@ sc = ride.scenarios.real.parse(jsondecode(fileread(path)), varargin{:});
 if isempty(sc.name)
     sc.name = spec;
 end
+sc.source = 'real';
 end

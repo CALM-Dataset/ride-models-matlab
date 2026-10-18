@@ -1,4 +1,8 @@
 function y = wk_weight(x, dt, oversample)
+%WK_WEIGHT Apply the ISO 2631-1 Wk frequency weighting to an acceleration signal.
+%   y = ride.core.comfort.wk_weight(x, dt) filters x, sampled every dt
+%   seconds, after upsampling by 10 (resample when the Signal Processing
+%   Toolbox is installed, pchip otherwise).
 if nargin < 3
     oversample = 10;
 end

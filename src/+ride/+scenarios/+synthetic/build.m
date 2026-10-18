@@ -1,4 +1,10 @@
 function sc = build(key, varargin)
+%BUILD A synthetic road from the size-code catalog.
+%   sc = ride.scenarios.synthetic.build('s_hm_c') builds a short bump, a
+%   medium hole and a raised crosswalk. Options: 'flat_start_m', 'gap_m'
+%   and 'speed_kmh'. The codes and sizes are in data/scenarios/synthetic.json.
+%
+%   See also ride.scenarios.get, ride.scenarios.synthetic.list.
 c = ride.scenarios.synthetic.catalog();
 opts = struct('flat_start_m', c.defaults.flat_start_m, 'gap_m', c.defaults.gap_m, 'speed_kmh', c.defaults.speed_kmh);
 for i = 1:2:numel(varargin)
@@ -22,7 +28,9 @@ else
             code = code(2:end);
         end
         if ~isfield(c.bumps, code)
-            error('ride:unknownScenario', 'unknown synthetic scenario key "%s"', key);
+            error('ride:unknownScenario', ['unknown synthetic scenario "%s": a name joins the codes %s with "_" ', ...
+                '(an "h" in front makes a hole), or is one of %s. ride.scenarios.synthetic.list() shows them all.'], ...
+                key, strjoin(fieldnames(c.bumps)', ', '), strjoin(fieldnames(c.potholes)', ', '));
         end
         b = c.bumps.(code);
         height = b.height_m;

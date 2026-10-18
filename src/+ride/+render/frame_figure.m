@@ -1,4 +1,6 @@
 function [update, fig] = frame_figure(P, road, out)
+%FRAME_FIGURE The animation figure, with a function that draws step k.
+%   [update, fig] = ride.render.frame_figure(P, road, out); update(k)
 fig = ride.render.scene.light_figure([100 100 1200 900]);
 info = ride.models.get(out.model);
 labels = info.hud(out);

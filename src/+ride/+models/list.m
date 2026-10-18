@@ -1,4 +1,9 @@
 function names = list()
+%LIST Names of the available models.
+%   A model is a folder src/+ride/+models/+<name> with an info.m, or a model
+%   added with ride.models.register.
+%
+%   See also ride.models.get, ride.models.validate.
 pkg = meta.package.fromName('ride.models');
 names = {};
 prefix = 'ride.models.';

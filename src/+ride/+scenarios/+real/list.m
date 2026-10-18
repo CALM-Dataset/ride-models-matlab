@@ -1,4 +1,8 @@
 function names = list(folder)
+%LIST Measured roads in the local cache, as folder/name.
+%   ride.scenarios.real.list('germany/eval') limits the list to one folder.
+%
+%   See also ride.scenarios.real.sync.
 base = fullfile(ride.scenarios.cache_dir(), 'real');
 names = {};
 if ~isfolder(base)

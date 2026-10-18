@@ -1,4 +1,6 @@
 function axes_out = signals(road, out, parent, region, wheelbase)
+%SIGNALS Time-series charts of a simulation, with the bump crossings shaded.
+%   ax = ride.render.plots.signals(road, out)
 c = ride.render.scene.colors();
 st = ride.render.scene.style();
 if nargin < 3 || isempty(parent)

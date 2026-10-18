@@ -1,4 +1,5 @@
 function z = height(road, s)
+%HEIGHT Road height in m at distance s.
 switch road.type
     case 'bumps'
         z = zeros(size(s));

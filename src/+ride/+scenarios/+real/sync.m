@@ -1,4 +1,11 @@
 function files = sync(folder, varargin)
+%SYNC Download measured roads from Hugging Face into the local cache.
+%   ride.scenarios.real.sync('germany/eval') downloads one folder;
+%   'all' downloads germany/train, germany/eval, italy/train and italy/eval.
+%   Files already in the cache are kept. The dataset is private: set the
+%   HF_TOKEN environment variable first, setenv('HF_TOKEN', 'hf_...').
+%
+%   See also ride.scenarios.real.list, ride.scenarios.get.
 opts = struct('repo', 'CALM-Dataset/CALM-Scenarios');
 for i = 1:2:numel(varargin)
     opts.(varargin{i}) = varargin{i + 1};
@@ -15,8 +22,7 @@ for f = 1:numel(folders)
     try
         listing = webread(url, wo);
     catch err
-        error('ride:hfAccess', ['could not list %s on Hugging Face (%s). If the dataset is private, set the ', ...
-            'HF_TOKEN environment variable to an access token.'], folders{f}, err.message);
+        ride.scenarios.real.hf_error(err, sprintf('the scenario folder "%s"', folders{f}));
     end
     for k = 1:numel(listing)
         entry = listing(k);
@@ -28,7 +34,11 @@ for f = 1:numel(folders)
             mkdir(fileparts(dest));
         end
         if ~isfile(dest)
-            websave(dest, sprintf('https://huggingface.co/datasets/%s/resolve/main/%s', opts.repo, entry.path), wo);
+            try
+                websave(dest, sprintf('https://huggingface.co/datasets/%s/resolve/main/%s', opts.repo, entry.path), wo);
+            catch err
+                ride.scenarios.real.hf_error(err, sprintf('the scenario file "%s"', entry.path));
+            end
         end
         files{end + 1, 1} = dest; %#ok<AGROW>
     end

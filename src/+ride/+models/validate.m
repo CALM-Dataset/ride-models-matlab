@@ -1,4 +1,10 @@
 function validate(name, varargin)
+%VALIDATE Check a model against the model contract.
+%   ride.models.validate(name) loads the parameters, simulates a short drive
+%   over a bump and checks the outputs, chart panels and header strip.
+%   ride.models.validate(name, 'draw', true) also draws one frame.
+%
+%   See also docs/add-a-model.md.
 opts = struct('draw', false);
 for i = 1:2:numel(varargin)
     opts.(varargin{i}) = varargin{i + 1};

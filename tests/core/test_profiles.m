@@ -42,6 +42,7 @@ mpc_v = ride.profiles.speeds(struct('type', 'mpc', 'file', fixture), dt, 10, sc)
 assert(max(abs(mpc_v - recorded.sources.mpc.v_mps(1:10))) < 1e-12, 'the mpc type must read the mpc source');
 assert(throws(@() ride.profiles.speeds(struct('type', 'recorded', 'source', 'ppo', 'file', fixture), dt, 10, sc)), 'a missing source must be an error');
 ride.profiles.register('double', @(p, dt, n, sc) 2 * p.speed_mps * ones(n, 1));
+registered = onCleanup(@() ride.profiles.unregister('double'));
 assert(all(ride.profiles.speeds(struct('type', 'double', 'speed_mps', 3), dt, 5, sc) == 6), 'a registered profile type must be usable');
 assert(any(strcmp(ride.profiles.list(), 'double')), 'a registered profile type must be listed');
 try

@@ -1,4 +1,9 @@
 function names = list(source)
+%LIST Scenario names.
+%   ride.scenarios.list() lists every source; ride.scenarios.list(source)
+%   lists one of 'synthetic', 'real' (the local cache) or 'registered'.
+%
+%   See also ride.scenarios.get.
 if nargin == 0
     names = [strcat('synthetic:', ride.scenarios.synthetic.list()); ...
              strcat('real:', ride.scenarios.real.list()); ...
