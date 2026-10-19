@@ -17,7 +17,7 @@ A profile is a struct with a `type` and its parameters. `ride.profiles.speeds(pr
 | `table` | `t_s`, `v_mps`: interpolated points, for a recommended speed from a planner |
 | `handle` | `fn`: a function of time, from code only |
 
-`mpc`, `human` and `recorded` replay a profile file. Pass one with the `file` field, or let the profile library find the file of the scenario by name: `ride.profiles.library.sync('stuttgart_sb01')` downloads `profiles/<scenario>.json` from the scenarios dataset into the cache, and `ride.profiles.library.list()` shows what is cached. Recorded profiles exist for the real scenarios only. A file looks like this, with the speed at every `dt_s`:
+`mpc`, `human` and `recorded` replay a profile file. Pass one with the `file` field, or let the profile library find the file of the scenario by name: `ride.profiles.library.sync('stuttgart_sb01')` downloads `profiles/<scenario>.json` from the scenarios dataset into the cache, and `ride.profiles.library.list()` shows what is cached. Recorded profiles exist for the real scenarios only, and they are not published in the dataset yet, so for now the `file` field is the way to use them. A file looks like this, with the speed at every `dt_s`:
 
 ```json
 {"name": "stuttgart_sb01", "dt_s": 0.02,
@@ -32,7 +32,7 @@ Add a type for the session:
 ride.profiles.register('stop_and_go', @(p, dt, n, sc) ...);   % returns n speeds
 ```
 
-To keep one, add a function `+ride/+profiles/+builtin/<name>.m` with the signature `v = name(profile, dt, n, sc)`.
+`examples/extend/add_speed_profile.m` is a complete example. To keep a type, add a function `+ride/+profiles/+builtin/<name>.m` with the signature `v = name(profile, dt, n, sc)`. `ride.profiles.unregister(name)` removes a registered type.
 
 ## Metrics
 
@@ -59,4 +59,4 @@ Add your own, for anything the simulation signals can tell you:
 ride.metrics.register('tyre_load_peak', @(out, P, sc) max(abs(out.z_W_ddot)) * 50);
 ```
 
-Metrics set in the config under `metrics` are computed by `ride.run`. A registered metric works there too, as long as it is registered before the run.
+Metrics set in the config under `metrics` are computed by `ride.run`. A registered metric works there too, as long as it is registered before the run. `examples/extend/add_metric.m` is a complete example; `ride.metrics.trip_end(out, P, sc)` gives the last step on the road, so a new metric can stop where the built-ins stop.

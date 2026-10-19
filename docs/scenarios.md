@@ -45,7 +45,7 @@ ride.scenarios.real.list()                          % what is cached
 sc = ride.scenarios.get('real:germany/eval/stuttgart_sb01');
 ```
 
-Folders: `germany/train`, `germany/eval`, `italy/train`, `italy/eval`, or `'all'`. `train` and `eval` are split by location, so no road in `eval` shares a place with `train`; the dataset's `split.yaml` lists the held-out locations. If the dataset needs an access token, set it before syncing: `setenv('HF_TOKEN', '...')`. Files are cached under `data/cache` (set `RIDE_CACHE` to move it). The published files are already trimmed to the labelled bump (with 0.5 m of level road on each side), and `sc.meta.trim` records the offset that was removed. A file without that marker is trimmed when it is loaded; pass `'trim', false` to keep a raw profile. `sc.meta.low_confidence` marks roads where the labelled bump could not be confirmed by the height sensors.
+Folders: `germany/train`, `germany/eval`, `italy/train`, `italy/eval`, or `'all'`. `train` and `eval` are split by location, so no road in `eval` shares a place with `train`; the dataset's `split.yaml` lists the held-out locations. The dataset is private: set an access token before syncing, `setenv('HF_TOKEN', 'hf_...')`. Without it the sync stops with an error that says so. Files are cached under `data/cache` (set `RIDE_CACHE` to move it). The published files are already trimmed to the labelled bump (with 0.5 m of level road on each side), and `sc.meta.trim` records the offset that was removed. A file without that marker is trimmed when it is loaded; pass `'trim', false` to keep a raw profile. `sc.meta.low_confidence` marks roads where the labelled bump could not be confirmed by the height sensors.
 
 ## Your own roads
 
@@ -79,3 +79,5 @@ Registered by name, so config files and `ride.scenarios.get` find it:
 ride.scenarios.register('washboard', @() sc);
 ride.scenarios.get('registered:washboard');
 ```
+
+`examples/extend/add_scenario_source.m` turns a CSV file of heights into a registered road, a pattern for any other source of roads.

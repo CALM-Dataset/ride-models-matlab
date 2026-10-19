@@ -2,20 +2,16 @@
 
 ## MATLAB toolbox
 
-`toolbox/package_toolbox.m` builds a `.mltbx` installer with the repository contents, `src` on the path, and the version you pass:
-
 ```matlab
 setup
-package_toolbox('1.0.0')       % writes dist/ride-models-1.0.0.mltbx
+addpath toolbox
+package_toolbox            % writes dist/ride-models-<version>.mltbx
 ```
 
-It needs MATLAB R2019b or newer. Double-click the file to install the toolbox.
+The version comes from the `VERSION` file. The script rebuilds the Simulink library first, then packs `config`, `data` (without the download cache), `docs`, `examples`, `simulink`, `src`, `templates`, `tests` and the top-level files. Installing the `.mltbx` (double-click it, or `matlab.addons.toolbox.installToolbox`) puts `src` and `simulink` on the path; `setup` is not needed. Downloads from Hugging Face go to `data/cache` inside the installed toolbox unless `RIDE_CACHE` points elsewhere.
+
+The toolbox was built and installed on MATLAB R2025b, and the examples and the test suite pass from the installed copy. Older releases are not tested.
 
 ## Publishing
 
-- GitHub: attach the `.mltbx` to a release.
-- MATLAB File Exchange: link the GitHub repository, and it picks up the releases.
-
-## Simulink
-
-`simulink/build_quartercar.m` builds the quarter-car as a Simulink model, and `simulink/test_quartercar_simulink.m` checks it against the reference runs. A Simulink library with the half-car and a mask for the parameters is the next step.
+Nothing is published automatically. The steps for a release are in [releasing.md](releasing.md).

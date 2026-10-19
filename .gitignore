@@ -1,11 +1,13 @@
 *.asv
 *.mex*
-slprj/
 *.autosave
 *.slxc
+slprj/
 *.mp4
 *.avi
 *.png
 !docs/images/*.png
+.DS_Store
 data/cache/
 dist/
+figures/

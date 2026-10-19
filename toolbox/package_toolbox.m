@@ -24,7 +24,7 @@ fprintf('wrote %s\n', file);
 end
 
 function files = toolbox_files(root)
-folders = {'config', 'data', 'docs', 'examples', 'simulink', 'src', 'tests'};
+folders = {'config', 'data', 'docs', 'examples', 'simulink', 'src', 'templates', 'tests'};
 files = {};
 for i = 1:numel(folders)
     found = dir(fullfile(root, folders{i}, '**', '*'));
