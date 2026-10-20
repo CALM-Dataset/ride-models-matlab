@@ -1,3 +1,1 @@
-root = fileparts(mfilename('fullpath'));
-addpath(fullfile(root, 'src'), fullfile(root, 'simulink'));
-clear root
+addpath(fullfile(fileparts(mfilename('fullpath')), 'src'), fullfile(fileparts(mfilename('fullpath')), 'simulink'));

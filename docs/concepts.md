@@ -15,7 +15,7 @@ A car drives over a road at some speed. How much does the body shake? This packa
 
 People feel vertical vibration most between about 4 and 8 Hz and hardly at all below 0.5 Hz. ISO 2631-1 captures this with the Wk weighting filter. `a_w` is the RMS of the Wk-weighted body acceleration over the trip, in m/s^2. Higher means less comfortable. `vdv` is the vibration dose value, which weights shocks more strongly.
 
-Slower is not always better. A slower pass can move the excitation toward the body resonance, so the weighted acceleration over a bump can grow even as the speed drops.
+Slower is not always better. In the synthetic catalog, `a_w` over the shallow and minor potholes peaks at an intermediate speed and falls again at higher speeds, and on the medium bump the reactive driver, who slows down for it, gets a higher half-car `a_w` than a constant speed. `examples/paper/fig2_aw_vs_speed.m` and `fig3_profiles.m` reproduce both.
 
 ## Symbols
 

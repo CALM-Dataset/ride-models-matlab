@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-message: If you use this model, please cite the thesis below.
+message: If you use this package, please cite the thesis below.
 title: Ride models
 type: software
 version: 1.0.0
@@ -7,6 +7,17 @@ authors:
   - family-names: Abdelazim
     given-names: Mohammed El Said Azab
 license: MIT
+repository-code: "https://github.com/Mohammed-Azab/ride-models-matlab"
+abstract: >-
+  Quarter-car and half-car ride models in MATLAB and Simulink with synthetic
+  and measured road scenarios, speed profiles and ISO 2631-1 comfort metrics.
+keywords:
+  - ride comfort
+  - quarter-car
+  - half-car
+  - ISO 2631-1
+  - MATLAB
+  - Simulink
 preferred-citation:
   type: thesis
   title: "Comfort-Aware Speed Planning over Road Anomalies: A Reinforcement-Learning Approach"
