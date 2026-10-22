@@ -28,3 +28,45 @@ preferred-citation:
   institution:
     name: Technische Universität Berlin
   year: 2026
+references:
+  - type: thesis
+    title: "Kombinierte Betrachtung passiver und (semi-)aktiver Radaufhängungen mittels äquivalenter Fahrwerksparameter"
+    authors:
+      - family-names: Klinger
+        given-names: Florian
+    thesis-type: PhD thesis
+    institution:
+      name: Technische Universität Wien
+    year: 2018
+  - type: book
+    title: "Dynamik der Kraftfahrzeuge"
+    authors:
+      - family-names: Mitschke
+        given-names: Manfred
+      - family-names: Wallentowitz
+        given-names: Henning
+    edition: "5"
+    publisher:
+      name: Springer Vieweg
+    year: 2014
+    doi: 10.1007/978-3-658-05068-9
+  - type: conference-paper
+    title: "Virtual Chassis Tuning with Emphasis on the Damper Characteristics"
+    authors:
+      - family-names: Klinger
+        given-names: Florian
+      - family-names: Edelmann
+        given-names: Johannes
+      - family-names: Plöchl
+        given-names: Manfred
+      - family-names: Jeindl
+        given-names: Stefan
+      - family-names: Angrosch
+        given-names: Bernhard
+    collection-title: "6th International Munich Chassis Symposium 2015"
+    publisher:
+      name: Springer Fachmedien
+    start: 325
+    end: 346
+    year: 2015
+    doi: 10.1007/978-3-658-09711-0_22

@@ -158,7 +158,13 @@ computed as the mean over samples and the sum over samples times $\Delta t$.
 
 ## Parameters and their provenance
 
-The numbers in `params.json` come from the thesis project this package was written for (see `CITATION.cff`).
+The numbers in `params.json` come from the thesis this package was written for (see `CITATION.cff`), which takes them from the following sources:
+
+- Quarter-car masses $m_B$, $m_W$, spring stiffness $k_S$, tyre stiffness $k_T$ and tyre damping $c_T$: the equivalent quarter-car parameterisation of F. Klinger, *Kombinierte Betrachtung passiver und (semi-)aktiver Radaufhängungen mittels äquivalenter Fahrwerksparameter*, PhD thesis, Technische Universität Wien, 2018.
+- Progressive spring (bump stop) parameters $\Delta_\text{cmp}$, $\Delta_\text{rbd}$, $f_{1/2,\text{cmp/rbd}}$ and $F_\text{max}$: M. Mitschke and H. Wallentowitz, *Dynamik der Kraftfahrzeuge*, 5th ed., Springer Vieweg, 2014, doi:10.1007/978-3-658-05068-9.
+- Damper characteristic and its parameters $D$, $A$, the degression factors 0.25 and 0.40, $v_d$, $v_z$: F. Klinger, J. Edelmann, M. Plöchl, S. Jeindl and B. Angrosch, "Virtual Chassis Tuning with Emphasis on the Damper Characteristics", *6th International Munich Chassis Symposium 2015*, Springer Fachmedien, pp. 325 to 346, doi:10.1007/978-3-658-09711-0_22.
+
+The half-car body parameters ($m_B$, $I_B$, $l_f$, $l_r$, $h_T$, $h_B$) and its suspension calibration come from the CALM project; they have no published source yet.
 
 | | Quarter-car | Half-car front | Half-car rear |
 | --- | --- | --- | --- |

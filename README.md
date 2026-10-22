@@ -68,7 +68,7 @@ setup
 run('tests/run_tests.m')
 ```
 
-The models are replayed against reference runs from an independent implementation of the same equations, and the Simulink blocks against the same runs. The scenario, profile, metric and model layers are checked on invariants, not stored numbers. `runtests('tests')` runs everything, Simulink included.
+The models are replayed against reference runs from an independent implementation of the same equations, and the Simulink blocks against the same runs. Against the car's IMU on 105 measured drives, the calibrated half-car's `a_w` is within 17 % at the median; see [validation](docs/validation.md). The scenario, profile, metric and model layers are checked on invariants, not stored numbers. `runtests('tests')` runs everything, Simulink included.
 
 ## Layout
 
