@@ -32,6 +32,7 @@ for i = 1:numel(folders)
     files = [files, fullfile({found.folder}, {found.name})]; %#ok<AGROW>
 end
 skip = contains(files, [filesep 'cache' filesep]) | contains(files, [filesep 'slprj' filesep]) ...
-    | endsWith(files, {'.asv', '.slxc', '.autosave', '.mp4', '.avi', '.DS_Store'});
+    | endsWith(files, {'.asv', '.slxc', '.autosave', '.mp4', '.avi', '.DS_Store'}) ...
+    | endsWith(files, fullfile('examples', 'validation', 'paths.json'));
 files = [files(~skip), fullfile(root, {'README.md', 'LICENSE', 'CITATION.cff', 'VERSION', 'RELEASE_NOTES.md', 'setup.m'})];
 end

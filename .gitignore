@@ -11,3 +11,4 @@ slprj/
 data/cache/
 dist/
 figures/
+examples/validation/paths.json

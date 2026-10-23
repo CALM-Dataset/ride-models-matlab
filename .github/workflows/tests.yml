@@ -10,7 +10,7 @@ env:
 
 jobs:
   matlab:
-    if: ${{ vars.RUN_MATLAB_TESTS == 'true' }}
+    if: ${{ !github.event.repository.private || vars.RUN_MATLAB_TESTS == 'true' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

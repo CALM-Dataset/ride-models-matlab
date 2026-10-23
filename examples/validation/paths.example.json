@@ -1,0 +1,6 @@
+{
+  "recordings": ["/path/to/CALM-ITALY/sequences", "/path/to/CALM-Germany/sequences"],
+  "scenarios": "/path/to/CALM-Scenarios",
+  "study_scores": "/path/to/comfort_scores.csv",
+  "output": ""
+}
