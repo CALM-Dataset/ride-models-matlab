@@ -11,6 +11,7 @@ test_scenarios();
 test_profiles();
 test_metrics();
 test_extensions();
+test_validation();
 test_halfcar_reference();
 test_halfcar_equilibrium_and_scaling();
 test_quartercar_reference();

@@ -19,6 +19,7 @@
 %   ride.core.comfort      wk_weight, rms, a_w
 %   ride.core.suspension   spring_nonlin, damper, damper_coefficients
 %   ride.render            animate, frame_figure, frame_index; plots.signals
+%   ride.validation        load_recording, window_road, compare; against the CALM recordings
 %
 % Simulink (simulink folder)
 %   ride_lib               library: Quarter-car, Half-car, Axle, Road, Drive

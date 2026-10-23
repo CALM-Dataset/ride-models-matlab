@@ -46,6 +46,10 @@ classdef RideModelsTest < matlab.unittest.TestCase
             test_extensions();
         end
 
+        function realDataValidation(~)
+            test_validation();
+        end
+
         function halfcarReference(~)
             test_halfcar_reference();
         end
