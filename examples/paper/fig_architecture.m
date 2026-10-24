@@ -40,7 +40,6 @@ arrow(ax, [15 26], [35.5 20]);
 arrow(ax, [37.5 26], [37.5 20]);
 arrow(ax, [86.5 26], [64 20]);
 here = fileparts(mfilename('fullpath'));
-exportgraphics(fig, fullfile(here, '..', '..', 'docs', 'images', 'architecture.png'), 'Resolution', 200, 'BackgroundColor', 'white');
 save_figure(fig, 'architecture', 'boxes list the models, profile types, metrics and core functions found in src/+ride');
 
 function box(ax, rect, color, heading, body)
