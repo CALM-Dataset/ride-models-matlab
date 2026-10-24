@@ -24,7 +24,7 @@ fprintf('washboard: a_w = %.3f m/s^2\n', r.metrics.a_w);
 ride.scenarios.register('washboard', @() washboard);
 r = ride.run(ride.config('scenario', 'registered:washboard'));
 %% Measured roads
-% The measured roads are in a private Hugging Face dataset. With an access
+% The measured roads are in a gated Hugging Face dataset. After access is granted, with an access
 % token in the HF_TOKEN environment variable:
 %
 %   setenv('HF_TOKEN', 'hf_...')

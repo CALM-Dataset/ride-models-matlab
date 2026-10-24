@@ -2,8 +2,8 @@ function files = sync(folder, varargin)
 %SYNC Download measured roads from Hugging Face into the local cache.
 %   ride.scenarios.real.sync('germany/eval') downloads one folder;
 %   'all' downloads germany/train, germany/eval, italy/train and italy/eval.
-%   Files already in the cache are kept. The dataset is private: set the
-%   HF_TOKEN environment variable first, setenv('HF_TOKEN', 'hf_...').
+%   Files already in the cache are kept. The dataset is gated: request access
+%   on Hugging Face, then set HF_TOKEN first, setenv('HF_TOKEN', 'hf_...').
 %
 %   See also ride.scenarios.real.list, ride.scenarios.get.
 opts = struct('repo', 'CALM-Dataset/CALM-Scenarios');

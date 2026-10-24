@@ -10,7 +10,7 @@ Quarter-car and half-car vehicle models for ride comfort analysis over road anom
 ## Features
 
 - Quarter-car (6 states) and half-car (11 states, pitch and longitudinal load transfer) models with nonlinear springs and dampers
-- 185 synthetic road scenarios and 159 measured road profiles from the CALM dataset
+- 185 synthetic road scenarios and 159 measured road profiles from the gated [CALM-Scenarios](https://huggingface.co/datasets/CALM-Dataset/CALM-Scenarios) dataset
 - Speed profiles: constant, speed dip, ramp, rule-based driver, recorded drives, tables and custom functions
 - Comfort metrics: weighted RMS acceleration `a_w`, vibration dose value, peak acceleration, travel time
 - Simulink library with the same models
@@ -20,7 +20,7 @@ Quarter-car and half-car vehicle models for ride comfort analysis over road anom
 
 Download `ride-models-<version>.mltbx` from the [releases page](https://github.com/CALM-Dataset/ride-models-matlab/releases) and open it in MATLAB. Alternatively, clone the repository and run `setup` in each session.
 
-Requirements: MATLAB R2025b. Simulink is required for the block library. The Signal Processing Toolbox is optional.
+Requirements: MATLAB R2025b. Simulink is required for the block library. The Signal Processing Toolbox is optional. The measured roads require approved access to the dataset on Hugging Face; everything else runs offline.
 
 ## Quick start
 
