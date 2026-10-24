@@ -14,12 +14,12 @@ The tests compare against the reference runs in `data/models/*/reference` or che
 
 ## Continuous integration
 
-`.github/workflows/tests.yml` runs `runtests('tests')` with `matlab-actions/setup-matlab` and `matlab-actions/run-tests` on R2025b with Simulink and the Signal Processing Toolbox. MathWorks only licenses these actions without a token for public repositories. For a private repository:
+`.github/workflows/tests.yml` runs `runtests('tests')` with `matlab-actions/setup-matlab` and `matlab-actions/run-tests` on R2025b with Simulink and the Signal Processing Toolbox. MathWorks licenses these actions without a token for public repositories, so the workflow runs on every push. For a private copy:
 
 1. Get a batch licensing token from MathWorks and store it as the repository secret `MLM_LICENSE_TOKEN`.
 2. Set the repository variable `RUN_MATLAB_TESTS` to `true`.
 
-Until the variable is set the workflow is skipped, so a private repository without a token shows no failing runs. The workflow has not been run yet.
+In a private copy the workflow is skipped until the variable is set, so it shows no failing runs.
 
 ## Generated files
 
@@ -29,7 +29,7 @@ Until the variable is set the workflow is skipped, so a private repository witho
 | `simulink/ride_demo_*.slx` | `build_demo('halfcar')`, `build_demo('quartercar')` |
 | `examples/live/*.mlx` | `examples/live/build_live_scripts.m`, from `examples/live/source/*.m` |
 | `dist/*.mltbx` | `toolbox/package_toolbox.m` |
-| `figures/*` | the scripts in `examples/paper` and `examples/show_frame.m` |
+| `figures/*` | the scripts listed in [figures.md](figures.md) |
 
 Edit the sources and rebuild; do not edit the generated files by hand.
 

@@ -3,11 +3,12 @@ message: If you use this package, please cite the thesis below.
 title: Ride models
 type: software
 version: 1.0.0
+date-released: "2026-10-24"
 authors:
   - family-names: Abdelazim
     given-names: Mohammed El Said Azab
 license: MIT
-repository-code: "https://github.com/Mohammed-Azab/ride-models-matlab"
+repository-code: "https://github.com/CALM-Dataset/ride-models-matlab"
 abstract: >-
   Quarter-car and half-car ride models in MATLAB and Simulink with synthetic
   and measured road scenarios, speed profiles and ISO 2631-1 comfort metrics.

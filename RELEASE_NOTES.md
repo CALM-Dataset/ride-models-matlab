@@ -11,4 +11,5 @@ First release.
 - Plug-in registries for models, scenarios, profiles and metrics; a model template.
 - Animated scene with time-series charts, frame export and video.
 - Simulink library with quarter-car, half-car, axle, road and drive blocks, checked against the same reference runs.
+- `ride.validation`: loads the CALM recordings and compares the simulation with the car's IMU; on 105 recorded drives the calibrated half-car's `a_w` is within 15.8 % at the median.
 - Verified on MATLAB R2025b with Simulink and the Signal Processing Toolbox.

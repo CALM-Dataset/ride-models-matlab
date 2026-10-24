@@ -58,6 +58,8 @@ Worked examples are in `examples/extend`, and `templates/model` is a model to co
 | [Simulink](docs/simulink.md) | the block library and the demo models |
 | [Model equations](docs/model-equations.md) | equations, parameters and comfort measures |
 | [Validation](docs/validation.md) | what is tested and the limits of the models |
+| [Against the recorded car](docs/validation-real-data.md) | simulation against the IMU of 105 recorded drives |
+| [Figures](docs/figures.md) | every figure and the script that draws it |
 | [Development](docs/development.md) | tests, CI, generated files |
 | [Packaging](docs/packaging.md) and [releasing](docs/releasing.md) | toolbox file, release steps |
 
@@ -68,7 +70,7 @@ setup
 run('tests/run_tests.m')
 ```
 
-The models are replayed against reference runs from an independent implementation of the same equations, and the Simulink blocks against the same runs. Against the car's IMU on 105 measured drives, the calibrated half-car's `a_w` is within 17 % at the median; see [validation](docs/validation.md). The scenario, profile, metric and model layers are checked on invariants, not stored numbers. `runtests('tests')` runs everything, Simulink included.
+The models are replayed against reference runs from an independent implementation of the same equations, and the Simulink blocks against the same runs. Against the car's IMU on 105 measured drives, the calibrated half-car's `a_w` is within 16 % at the median; see [validation](docs/validation.md) and [the recorded drives](docs/validation-real-data.md). The scenario, profile, metric and model layers are checked on invariants, not stored numbers. `runtests('tests')` runs everything, Simulink included.
 
 ## Layout
 
@@ -81,7 +83,8 @@ src/+ride
 ├── +scenarios    synthetic  real  (+ get list register make from_file)
 ├── +profiles     builtin  library  (+ speeds list register)
 ├── +metrics      builtin  (+ evaluate list register)
-└── +render       scene  plots  (+ animate frame_figure)
+├── +render       scene  plots  (+ animate frame_figure)
+└── +validation   recordings, roads and the comparison with the IMU
 simulink   ride_lib.slx and the scripts that build and test it
 data/models  data/scenarios  docs  examples  templates  tests  toolbox
 ```
