@@ -18,8 +18,6 @@ jobs:
         with:
           release: R2025b
           products: Simulink Signal_Processing_Toolbox
-      - uses: matlab-actions/run-tests@v3
+      - uses: matlab-actions/run-command@v2
         with:
-          source-folder: src; simulink
-          select-by-folder: tests
-          test-results-junit: test-results/results.xml
+          command: setup; results = runtests('tests'); disp(table(results)); assertSuccess(results);
