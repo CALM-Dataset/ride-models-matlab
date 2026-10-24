@@ -4,6 +4,11 @@ title: Ride models
 type: software
 version: 1.0.1
 date-released: "2026-10-24"
+doi: 10.5281/zenodo.23627533
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.23627533
+    description: Zenodo archive of all versions
 authors:
   - family-names: Abdelazim
     given-names: Mohammed El Said Azab
