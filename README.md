@@ -2,6 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![MATLAB R2025b](https://img.shields.io/badge/MATLAB-R2025b-orange.svg)](https://www.mathworks.com/products/matlab.html)
+[![Tests](https://github.com/CALM-Dataset/ride-models-matlab/actions/workflows/tests.yml/badge.svg)](https://github.com/CALM-Dataset/ride-models-matlab/actions/workflows/tests.yml)
 
 Quarter-car and half-car vehicle models for ride comfort analysis over road anomalies such as speed bumps, crosswalks and potholes. The package simulates the vertical dynamics of a car for a given road and speed profile and scores the ride with the ISO 2631-1 frequency-weighted acceleration. It includes a Simulink block library and an animated visualisation.
 
