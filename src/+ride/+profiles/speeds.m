@@ -7,7 +7,7 @@ function v = speeds(profile, dt, n, sc)
 %   The scenario is needed by types that read the road or its suggested
 %   speed ("speed_mps": "scenario").
 %
-%   ride.profiles.list() shows the types. See docs/profiles-and-metrics.md.
+%   ride.profiles.list() shows the types. See the Speed profiles and metrics page of the wiki.
 %
 %   See also ride.profiles.register, ride.run.
 if nargin < 4

@@ -25,4 +25,4 @@
 %   ride_lib               library: Quarter-car, Half-car, Axle, Road, Drive
 %   run_demo               demo model driven by ride.run
 %
-% Start with the getting-started guide in docs or examples/live/getting_started.mlx.
+% Start with examples/live/getting_started.mlx or https://github.com/CALM-Dataset/ride-models-matlab/wiki.

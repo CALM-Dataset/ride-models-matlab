@@ -39,6 +39,5 @@ end
 figure; plot(speeds_kmh, a_w, 'o-'); grid on
 xlabel('speed [km/h]'); ylabel('a_w [m/s^2]'); title('Medium bump, quarter-car')
 %% Next
-% * |docs/scenarios.md|: synthetic, measured and your own roads
-% * |docs/profiles-and-metrics.md|: speed profiles and scores
-% * |docs/add-a-model.md|: a new vehicle model
+% The wiki at https://github.com/CALM-Dataset/ride-models-matlab/wiki has
+% pages on roads, speed profiles and metrics, and adding a vehicle model.
