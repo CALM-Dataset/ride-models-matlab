@@ -4,7 +4,7 @@ A checklist for a GitHub release with a Zenodo DOI. Nothing here runs automatica
 
 ## Before the release
 
-1. Set the new version in `VERSION` and in the `version` field of `CITATION.cff` (`test_version` fails when they differ), and add a section to `RELEASE_NOTES.md`.
+1. Set the new version in `VERSION` and in the `version` field of `CITATION.cff` (`test_version` fails when they differ), and write the release notes in `RELEASE_NOTES.md`, which is kept locally and not tracked.
 2. Rebuild the generated files: `build_ride_lib`, `build_demo('halfcar')`, `build_demo('quartercar')`, `examples/live/build_live_scripts.m`.
 3. Run the tests on a clean path: `restoredefaultpath; setup; results = runtests('tests')`. All must pass, Simulink included.
 4. Run `examples/paper/make_all.m` and look at every figure.

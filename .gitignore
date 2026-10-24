@@ -12,3 +12,4 @@ data/cache/
 dist/
 figures/
 examples/validation/paths.json
+RELEASE_NOTES.md
