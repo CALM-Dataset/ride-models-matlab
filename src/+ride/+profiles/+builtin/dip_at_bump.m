@@ -7,7 +7,12 @@ x0 = 0;
 if ~isempty(sc.road.bumps)
     x0 = min(sc.road.bumps(:, 1));
 end
-center = max(x0 - profile.lead_m, 0) / speed;
-t = (1:n)' * dt;
-v = speed - profile.depth_mps * exp(-((t - center) .^ 2) / (2 * profile.width_s ^ 2));
+center = max(x0 - profile.lead_m, 0);
+width = profile.width_s * speed;
+v = zeros(n, 1);
+s = 0;
+for k = 1:n
+    v(k) = speed - profile.depth_mps * exp(-((s - center) ^ 2) / (2 * width ^ 2));
+    s = s + v(k) * dt;
+end
 end

@@ -11,6 +11,7 @@ before = ride.profiles.speeds(struct('type', 'dip_at_bump', 'speed_mps', 6, 'dep
 [~, slowest] = min(before);
 distance = cumsum(before) * dt;
 assert(distance(slowest) < sc.road.bumps(1, 1), 'the dip must be deepest before the bump');
+assert(abs(distance(slowest) - (sc.road.bumps(1, 1) - 8)) < 0.5, 'the dip must be deepest lead_m before the bump, measured along the road');
 flat_road = ride.scenarios.make('flat', ride.core.terrain.from_function(@(s) 0 * s, 30, 0.05));
 none = ride.profiles.speeds(struct('type', 'dip_at_bump', 'speed_mps', 6, 'depth_mps', 3, 'lead_m', 8, 'width_s', 1), dt, 50, flat_road);
 assert(numel(none) == 50 && all(isfinite(none)), 'a dip profile must still work on a road without labelled bumps');

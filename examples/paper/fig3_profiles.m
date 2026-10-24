@@ -35,7 +35,7 @@ for panel = 1:2
     end
 end
 cfg = ride.config();
-save_figure(fig, 'fig3_profiles', sprintf('half-car | %s | profiles from config/default.json: constant, dip (%.1f m/s deep, %.0f m before the bump), reactive', ...
+save_figure(fig, 'fig3_profiles', sprintf('half-car | %s | profiles from config/default.json: constant, dip (%.1f m/s deep, slowest %.0f m before the bump), reactive', ...
     strjoin(scenarios, ', '), cfg.profiles.dip.depth_mps, cfg.profiles.dip.lead_m));
 for j = 1:numel(scenarios)
     fprintf('%-30s', scenarios{j});
