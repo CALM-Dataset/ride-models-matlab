@@ -70,7 +70,7 @@ runtests('tests')
 
 If you use this software, please cite:
 
-> M. E. A. Abdelazim, *Comfort-Aware Speed Planning over Road Anomalies: A Reinforcement-Learning Approach*, Bachelor's thesis, Technische Universität Berlin, 2026.
+> Abdelazim, M. E. S. Azab, *Comfort-Aware Speed Planning over Road Anomalies: A Reinforcement-Learning Approach*, Bachelor's thesis, Technische Universität Berlin, 2026.
 
 To cite the software itself, use the Zenodo archive: [doi:10.5281/zenodo.23627533](https://doi.org/10.5281/zenodo.23627533). A machine-readable citation is provided in `CITATION.cff`.
 
