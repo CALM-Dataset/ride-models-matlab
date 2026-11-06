@@ -31,8 +31,21 @@ assert(shifted.lag_s >= 0.4, 'ignoring the trimmed start must make the measureme
 windows = ride.validation.find_windows(fullfile(work, 'sequences'));
 assert(isKey(windows, 'testtown_sb01'), 'recorded windows must be found by scenario name');
 list = ride.validation.find_scenarios(fullfile(work, 'scenarios'));
-assert(height(list) == 1 && list.paper_split == "eval" && list.region == "germany" && ~list.low_confidence, ...
+assert(height(list) == 1 && list.split == "eval" && list.region == "germany" && ~list.low_confidence, ...
     'scenario files must be listed with their region, split and confidence');
+for other = ["testtown_sb02", "testtown_sb03"]
+    copyfile(scenario_file, fullfile(fileparts(scenario_file), other + ".json"));
+end
+write_text(fullfile(work, 'scenarios', 'split.yaml'), sprintf('eval:\n  - testtown_sb01\nexclude:\n  - testtown_sb02\n'));
+list = ride.validation.find_scenarios(fullfile(work, 'scenarios'));
+assert(isequal(list.split, ["eval"; "excluded"; "train"]), 'a road under exclude: must be neither an evaluation nor a training road');
+old_cache = getenv('RIDE_CACHE');
+restore = onCleanup(@() setenv('RIDE_CACHE', old_cache));
+setenv('RIDE_CACHE', work);
+movefile(fullfile(work, 'scenarios'), fullfile(work, 'real'));
+assert(isequal(ride.scenarios.real.list('train'), {'germany/crossings/testtown_sb03'}), 'training roads must leave out the excluded roads');
+assert(isequal(ride.scenarios.real.list('eval'), {'germany/crossings/testtown_sb01'}), 'evaluation roads must be the eval: list');
+assert(isequal(ride.scenarios.real.list('exclude'), {'germany/crossings/testtown_sb02'}), 'excluded roads must be the exclude: list');
 end
 
 function [window, scenario_file, truth] = synthetic_recording(window, scenarios)
@@ -44,10 +57,10 @@ z = ride.core.terrain.height(ride.core.terrain.bumps(bump), (0:ds:40)');
 scenario = struct('name', 'testtown_sb01', 'meta', struct('trim', struct('offset_m', offset)), ...
     'road', struct('ds_m', ds, 'z', z), 'bumps', struct('s_start_m', bump(1), 's_end_m', bump(1) + bump(3), ...
     'peak_z_m', bump(2), 'low_confidence', false));
-mkdir(fullfile(scenarios, 'germany', 'eval'));
-scenario_file = fullfile(scenarios, 'germany', 'eval', 'testtown_sb01.json');
+mkdir(fullfile(scenarios, 'germany', 'crossings'));
+scenario_file = fullfile(scenarios, 'germany', 'crossings', 'testtown_sb01.json');
 write_json(scenario_file, scenario);
-write_text(fullfile(scenarios, 'split.yaml'), sprintf('paper_split:\n  eval:\n    - testtown_sb01\n'));
+write_text(fullfile(scenarios, 'split.yaml'), sprintf('eval:\n  - testtown_sb01\n'));
 
 ts0 = 1000000;
 s0 = 50;

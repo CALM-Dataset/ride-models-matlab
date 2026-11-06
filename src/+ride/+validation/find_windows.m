@@ -1,6 +1,6 @@
 function map = find_windows(roots)
 %FIND_WINDOWS Recorded windows under one or more sequences folders.
-%   map = ride.validation.find_windows({'/path/CALM-ITALY/sequences', ...}) returns a
+%   map = ride.validation.find_windows({'/path/CALM-Italy/sequences', ...}) returns a
 %   containers.Map from scenario name (for example 'nardo_sb01') to its window folder,
 %   for the layout <root>/<location>/<scenario>/meta.yaml.
 if ischar(roots) || isstring(roots)

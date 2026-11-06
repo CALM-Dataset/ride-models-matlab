@@ -2,8 +2,8 @@ function results = run_real_data(config, varargin)
 %RUN_REAL_DATA Compare the simulation with the recorded drives of the CALM dataset.
 %   results = run_real_data('paths.json') reads the data folders from a JSON file laid out
 %   like paths.example.json (or from a struct with the same fields):
-%     recordings    the sequences folders of CALM-ITALY and CALM-Germany (read in place)
-%     scenarios     the CALM-Scenarios folder with the scenario files and split.yaml
+%     recordings    the sequences folders of CALM-Italy and CALM-Germany (read in place)
+%     scenarios     the CALM-Scenarios folder with germany/crossings, italy/crossings and split.yaml
 %     study_scores  optional: comfort_scores.csv of the original study, to check the port
 %     output        optional: where tables and figures go (default figures/real_data)
 %   For every scenario with a recording it runs ride.validation.compare for the calibrated
@@ -29,6 +29,9 @@ if opts.reuse && isfile(store)
     saved = load(store);
     results = saved.results;
     series = saved.series;
+    if ~ismember('split', results.Properties.VariableNames) && ismember('paper_split', results.Properties.VariableNames)
+        results = renamevars(results, 'paper_split', 'split');
+    end
 else
     [results, series] = compare_all(paths, opts.only);
     save(store, 'results', 'series', '-v7');
@@ -72,7 +75,6 @@ end
 function [results, series] = compare_all(paths, only)
 scenarios = ride.validation.find_scenarios(paths.scenarios);
 windows = ride.validation.find_windows(paths.recordings);
-profiles = fullfile(paths.scenarios, 'profiles');
 study = table();
 if ~isempty(paths.study_scores) && isfile(paths.study_scores)
     study = readtable(paths.study_scores, 'TextType', 'string');
@@ -103,7 +105,7 @@ for i = 1:height(scenarios)
     row.scenario = string(name);
     row.location = string(regexprep(name, '_sb\d+$', ''));
     row.region = scenarios.region(i);
-    row.paper_split = scenarios.paper_split(i);
+    row.split = scenarios.split(i);
     row.low_confidence = scenarios.low_confidence(i);
     row.trim_offset_m = scenario.meta.trim.offset_m;
     row.anchor_gap_m = interp1(rec.t, rec.s, rec.meta.anchor_t, 'linear', NaN) + rec.s0 - rec.meta.s_bump;
@@ -113,7 +115,6 @@ for i = 1:height(scenarios)
     row.imu_rate_hz = 1 / rec.imu_dt;
     row.imu_start_gap_ms = 1e3 * rec.imu_t(1);
     row.mean_speed_kmh = 3.6 * mean(rec.v);
-    row.staged_speed_gap_mps = staged_speed_gap(profiles, name, rec);
     for v = 1:size(variants, 1)
         c = ride.validation.compare(rec, scenario, 'model', model_of(variants{v, 2}), 'P', models.(variants{v, 2}), ...
             'road', variants{v, 3}, 'offset_m', variants{v, 4});
@@ -162,27 +163,12 @@ function model = model_of(key)
 model = regexprep(key, '_nominal$', '');
 end
 
-function gap = staged_speed_gap(folder, name, rec)
-gap = NaN;
-file = fullfile(folder, [name '.json']);
-if ~isfile(file)
-    return
-end
-data = jsondecode(fileread(file));
-if ~isfield(data.sources, 'human')
-    return
-end
-staged = data.sources.human.v_mps(:);
-n = min(numel(staged), numel(rec.v));
-gap = max(abs(staged(1:n) - rec.v(1:n)));
-end
-
 function summary = summarise(results)
 usable = ~results.low_confidence;
 sets = {
     'usable, all', usable
-    'usable, paper training', usable & results.paper_split == "train"
-    'usable, paper held out', usable & results.paper_split == "eval"
+    'usable, training', usable & results.split == "train"
+    'usable, held out', usable & results.split == "eval"
     'usable, Germany', usable & results.region == "germany"
     'usable, Italy', usable & results.region == "italy"
     'low confidence', results.low_confidence};

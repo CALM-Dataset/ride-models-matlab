@@ -13,7 +13,7 @@ Quarter-car and half-car vehicle models for ride comfort analysis over road anom
 
 - Quarter-car (6 states) and half-car (11 states, pitch and longitudinal load transfer) models with nonlinear springs and dampers
 - 185 synthetic road scenarios and 159 measured road profiles from the gated [CALM-Scenarios](https://huggingface.co/datasets/CALM-Dataset/CALM-Scenarios) dataset
-- Speed profiles: constant, speed dip, ramp, rule-based driver, recorded drives, tables and custom functions
+- Speed profiles: constant, speed dip, ramp, rule-based driver, the MPC and PPO comfort profiles of the gated [CALM-Germany](https://huggingface.co/datasets/CALM-Dataset/CALM-Germany) and [CALM-Italy](https://huggingface.co/datasets/CALM-Dataset/CALM-Italy) datasets, tables and custom functions
 - Comfort metrics: weighted RMS acceleration `a_w`, vibration dose value, peak acceleration, travel time
 - Simulink library with the same models
 - Extensible: models, scenarios, speed profiles and metrics can be added without changing the package
@@ -22,7 +22,7 @@ Quarter-car and half-car vehicle models for ride comfort analysis over road anom
 
 Download `ride-models-<version>.mltbx` from the [releases page](https://github.com/CALM-Dataset/ride-models-matlab/releases) and open it in MATLAB. Alternatively, clone the repository and run `setup` in each session.
 
-Requirements: MATLAB R2025b. Simulink is required for the block library. The Signal Processing Toolbox is optional. The measured roads require approved access to the dataset on Hugging Face; everything else runs offline.
+Requirements: MATLAB R2025b. Simulink is required for the block library. The Signal Processing Toolbox is optional. The measured roads and their comfort profiles require approved access to the datasets on Hugging Face; everything else runs offline.
 
 ## Quick start
 
@@ -51,6 +51,19 @@ Weighted RMS acceleration against constant speed for single bumps and potholes:
 
 Further examples are in `examples/` and `examples/live/`.
 
+## Measured roads
+
+The measured roads are downloaded on first use from the `germany/crossings` and `italy/crossings` folders of CALM-Scenarios into `data/cache/scenarios`. The roads listed under `eval:` in its `split.yaml` are the evaluation roads, the roads under `exclude:` are left out of training, and all others are training roads. With an access token:
+
+```matlab
+setenv('HF_TOKEN', 'hf_...')
+ride.scenarios.real.sync('all')
+ride.scenarios.real.list('eval')
+r = ride.run(ride.config('scenario', 'real:stuttgart_sb01', 'drive.profile', 'mpc'));
+```
+
+The `mpc` and `ppo` speed profiles are read from `sequences/<area>/<road>/comfort_profiles/` of CALM-Germany and CALM-Italy. They exist only for roads whose bump is not marked as low confidence.
+
 ## Documentation
 
 See the [wiki](https://github.com/CALM-Dataset/ride-models-matlab/wiki) for the user guide, the model equations and the validation.
@@ -70,7 +83,7 @@ runtests('tests')
 
 If you use this software, please cite:
 
-> M. E. A. Abdelazim, *Comfort-Aware Speed Planning over Road Anomalies: A Reinforcement-Learning Approach*, Bachelor's thesis, Technische Universität Berlin, 2026.
+> Abdelazim, M. E. S. Azab, *Comfort-Aware Speed Planning over Road Anomalies: A Reinforcement-Learning Approach*, Bachelor's thesis, Technische Universität Berlin, 2026.
 
 To cite the software itself, use the Zenodo archive: [doi:10.5281/zenodo.23627533](https://doi.org/10.5281/zenodo.23627533). A machine-readable citation is provided in `CITATION.cff`.
 
