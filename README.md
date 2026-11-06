@@ -66,11 +66,11 @@ The `mpc` and `ppo` speed profiles are read from `sequences/<area>/<road>/comfor
 
 ## Documentation
 
-See the [wiki](https://github.com/CALM-Dataset/ride-models-matlab/wiki) for the user guide, the model equations and the validation.
+See the [wiki](https://github.com/CALM-Dataset/ride-models-matlab/wiki) for the user guide, the model equations and the model accuracy.
 
-## Validation
+## Model accuracy
 
-The MATLAB and Simulink implementations agree with an independent Python implementation to within 1e-11 relative to the signal peak. Compared with IMU measurements from 105 recorded drives, the calibrated half-car reproduces the weighted RMS acceleration with a median absolute error of 15.8 % and a median bias of +3.1 %. See [Validation](https://github.com/CALM-Dataset/ride-models-matlab/wiki/Validation) for details and limitations.
+The MATLAB and Simulink implementations agree with an independent Python implementation to within 1e-11 relative to the signal peak. Compared with IMU measurements from 104 recorded drives, the calibrated half-car reproduces the weighted RMS acceleration to within about 85 %, with no overall bias, and 81 % of the drives are within 30 % of the measurement. See [Model accuracy](https://github.com/CALM-Dataset/ride-models-matlab/wiki/Model-accuracy) for details and limitations.
 
 Run the test suite with:
 
