@@ -16,6 +16,9 @@ if isempty(source)
 end
 saved = load(fullfile(source, 'results.mat'));
 r = saved.results(~saved.results.low_confidence, :);
+if ~ismember('split', r.Properties.VariableNames) && ismember('paper_split', r.Properties.VariableNames)
+    r = renamevars(r, 'paper_split', 'split');
+end
 series = saved.series;
 output = fullfile(ride.root(), 'figures', 'paper');
 if ~isfolder(output)
@@ -35,12 +38,13 @@ ax = paper_axes(layout, style);
 limit = [0.06 1.4];
 fill(ax, [limit fliplr(limit)], [limit * 0.7 fliplr(limit) * 1.3], style.band, 'EdgeColor', 'none', 'DisplayName', '$\pm 30\,\%$');
 plot(ax, limit, limit, 'k--', 'LineWidth', 0.8, 'HandleVisibility', 'off');
-train = r.paper_split == "train";
+train = r.split == "train";
 scatter(ax, r.a_w_measured(train), r.a_w_aligned(train), 36, style.aligned, 'o', 'filled', 'MarkerFaceAlpha', 0.75, ...
     'MarkerEdgeColor', 'k', 'LineWidth', 0.3, 'DisplayName', sprintf('training roads (%d)', nnz(train)));
-scatter(ax, r.a_w_measured(~train), r.a_w_aligned(~train), 60, style.imu, 'd', 'filled', 'MarkerFaceAlpha', 0.85, ...
+held = r.split == "eval";
+scatter(ax, r.a_w_measured(held), r.a_w_aligned(held), 60, style.imu, 'd', 'filled', 'MarkerFaceAlpha', 0.85, ...
     'MarkerEdgeColor', 'k', 'LineWidth', 0.3, ...
-    'DisplayName', sprintf('evaluation roads, held out (%d)', nnz(~train)));
+    'DisplayName', sprintf('evaluation roads, held out (%d)', nnz(held)));
 set(ax, 'XScale', 'log', 'YScale', 'log');
 axis(ax, [limit limit]);
 xlabel(ax, '$a_w$ measured by the IMU in $\mathrm{m/s^2}$', 'Interpreter', 'latex');
@@ -67,8 +71,8 @@ end
 
 function traces_figure(r, series, style, output)
 names = string({series.name});
-train = r.paper_split == "train";
-picks = [closest_to_median(r(train, :)), closest_to_median(r(~train, :))];
+train = r.split == "train";
+picks = [closest_to_median(r(train, :)), closest_to_median(r(r.split == "eval", :))];
 roles = ["training road", "evaluation road, held out"];
 [fig, layout] = paper_figure(style, [27 13], [2 1]);
 for k = 1:2

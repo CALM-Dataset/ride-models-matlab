@@ -28,5 +28,6 @@ r = ride.run(ride.config('scenario', 'registered:washboard'));
 % token in the HF_TOKEN environment variable:
 %
 %   setenv('HF_TOKEN', 'hf_...')
-%   ride.scenarios.real.sync('germany/eval')
-%   sc = ride.scenarios.get('real:germany/eval/stuttgart_sb01');
+%   ride.scenarios.real.sync('all')
+%   ride.scenarios.real.list('eval')
+%   sc = ride.scenarios.get('real:stuttgart_sb01');

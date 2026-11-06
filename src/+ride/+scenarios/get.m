@@ -1,7 +1,8 @@
 function sc = get(spec, varargin)
 %GET A road scenario by name, file or struct.
 %   sc = ride.scenarios.get('synthetic:m')                 a synthetic road (the prefix is optional)
-%   sc = ride.scenarios.get('real:germany/eval/stuttgart_sb01')   a measured road from Hugging Face
+%   sc = ride.scenarios.get('real:stuttgart_sb01')         a measured road from Hugging Face
+%   sc = ride.scenarios.get('real:germany/crossings/stuttgart_sb01')   the same road by its path
 %   sc = ride.scenarios.get('file:my_road.json')           a road from a JSON file
 %   sc = ride.scenarios.get('registered:washboard')        a road registered with ride.scenarios.register
 %   sc = ride.scenarios.get(struct('bumps', ...))          a road from a struct

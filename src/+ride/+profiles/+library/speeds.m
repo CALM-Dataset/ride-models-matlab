@@ -3,7 +3,7 @@ if nargin > 4 && ~isempty(file)
     if ~isfile(file)
         error('ride:noRecordedProfile', 'recorded profile file "%s" was not found', file);
     end
-    data = jsondecode(fileread(file));
+    data = ride.profiles.library.read(file);
 elseif isempty(sc) || ~strcmp(sc.source, 'real')
     error('ride:noRecordedProfile', ['recorded "%s" speeds exist only for the measured real: scenarios. ', ...
         'For other roads give a profile file in the "file" field.'], source);
@@ -21,7 +21,11 @@ if ~isfield(data.sources, source)
         data.name, source, strjoin(fieldnames(data.sources)', ', '));
 end
 recorded = data.sources.(source).v_mps(:);
-t_src = (1:numel(recorded))' * data.dt_s;
+dt_src = data.dt_s;
+if isfield(data.sources.(source), 'dt_s')
+    dt_src = data.sources.(source).dt_s;
+end
+t_src = (1:numel(recorded))' * dt_src;
 t = (1:n)' * dt;
 v = interp1(t_src, recorded, t, 'linear', recorded(end));
 v(t < t_src(1)) = recorded(1);
