@@ -2,7 +2,7 @@ function grid = check_calibration(config, varargin)
 %CHECK_CALIBRATION How well other suspension scalings of the half-car match the recorded drives.
 %   grid = check_calibration('paths.json') scales the nominal spring rates and damper
 %   coefficients of the half-car by a grid of factors, replays every usable recorded drive over
-%   its aligned scenario road and compares a_w with the IMU. The factors are chosen on the paper
+%   its aligned scenario road and compares a_w with the IMU. The factors are chosen on the
 %   training roads only and scored on the held-out roads, to see whether the calibrated
 %   suspension (springs 1.06, dampers 0.16 times nominal) is an in-sample fit. Nothing is
 %   changed in the parameter files. Writes calibration.csv and calibration.png/.pdf to the
@@ -33,27 +33,28 @@ for g = 1:numel(S)
         errors(k, g) = ride.core.comfort.a_w(out.z_B_ddot, P.DT) / drives(k).a_w_measured - 1;
     end
     fprintf('springs %.2f dampers %.2f  training %.1f %%  held out %.1f %%  %.0f s\n', S(g), D(g), ...
-        100 * median(abs(errors([drives.train], g))), 100 * median(abs(errors(~[drives.train], g))), toc(started));
+        100 * median(abs(errors([drives.train], g))), 100 * median(abs(errors([drives.held], g))), toc(started));
 end
 train = [drives.train]';
+held = [drives.held]';
 grid = table(S(:), D(:), 'VariableNames', {'spring_factor', 'damper_factor'});
 grid.train_median_abs_pct = 100 * median(abs(errors(train, :)), 1)';
 grid.train_median_pct = 100 * median(errors(train, :), 1)';
-grid.held_out_median_abs_pct = 100 * median(abs(errors(~train, :)), 1)';
-grid.held_out_median_pct = 100 * median(errors(~train, :), 1)';
+grid.held_out_median_abs_pct = 100 * median(abs(errors(held, :)), 1)';
+grid.held_out_median_pct = 100 * median(errors(held, :), 1)';
 grid.all_median_abs_pct = 100 * median(abs(errors), 1)';
 grid.all_within_30_pct = 100 * mean(abs(errors) <= 0.3, 1)';
 writetable(grid, fullfile(output, 'calibration.csv'));
 [~, best] = min(grid.train_median_abs_pct);
 fprintf('best on training: springs %.2f dampers %.2f, training %.1f %%, held out %.1f %%\n', ...
     grid.spring_factor(best), grid.damper_factor(best), grid.train_median_abs_pct(best), grid.held_out_median_abs_pct(best));
-draw(grid, opts, output, nnz(train), nnz(~train));
+draw(grid, opts, output, nnz(train), nnz(held));
 end
 
 function drives = load_drives(paths)
 scenarios = ride.validation.find_scenarios(paths.scenarios);
 windows = ride.validation.find_windows(cellstr(paths.recordings));
-drives = struct('name', {}, 'road', {}, 'speeds', {}, 'a_w_measured', {}, 'train', {});
+drives = struct('name', {}, 'road', {}, 'speeds', {}, 'a_w_measured', {}, 'train', {}, 'held', {});
 for i = 1:height(scenarios)
     name = char(scenarios.name(i));
     if scenarios.low_confidence(i) || ~isKey(windows, name)
@@ -63,9 +64,10 @@ for i = 1:height(scenarios)
     scenario = jsondecode(fileread(scenarios.file(i)));
     road = ride.validation.window_road('scenario', rec, scenario);
     drives(end + 1) = struct('name', string(name), 'road', road, 'speeds', rec.v(1:end - 1), ...
-        'a_w_measured', ride.core.comfort.a_w(rec.a_z, rec.imu_dt), 'train', scenarios.paper_split(i) == "train"); %#ok<AGROW>
+        'a_w_measured', ride.core.comfort.a_w(rec.a_z, rec.imu_dt), 'train', scenarios.split(i) == "train", ...
+        'held', scenarios.split(i) == "eval"); %#ok<AGROW>
 end
-fprintf('%d usable drives, %d training, %d held out\n', numel(drives), nnz([drives.train]), nnz(~[drives.train]));
+fprintf('%d usable drives, %d training, %d held out\n', numel(drives), nnz([drives.train]), nnz([drives.held]));
 end
 
 function P = scaled(base, spring, damper)
