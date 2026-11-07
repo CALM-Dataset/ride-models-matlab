@@ -27,6 +27,6 @@ for i = 1:numel(speeds_kmh)
         legend(ax, 'Location', 'southeast', 'Box', 'off');
     end
 end
-xlabel(layout, 'distance of the front axle from the bump start [m]', 'FontName', 'Times New Roman', 'FontSize', 9);
+xlabel(layout, 'distance of the front axle from the bump start [m]', 'FontName', figure_font(), 'FontSize', 9);
 save_figure(fig, 'fig1_quarter_vs_half', sprintf('%s | constant speed %s km/h | quarter-car and half-car', ...
     scenario, strjoin(string(speeds_kmh), ', ')));

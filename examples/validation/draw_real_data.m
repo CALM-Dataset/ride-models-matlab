@@ -23,10 +23,11 @@ for k = 1:2
     hold(ax, 'on');
     fill(ax, [limit fliplr(limit)], [limit * 0.7 fliplr(limit) * 1.3], [0.92 0.92 0.92], 'EdgeColor', 'none', 'DisplayName', '\pm30 %');
     plot(ax, limit, limit, '--', 'Color', [0.4 0.4 0.4], 'HandleVisibility', 'off');
-    train = r.paper_split == "train";
+    train = r.split == "train";
     scatter(ax, r.a_w_measured(train), r.(['a_w_' pairs{k, 1}])(train), 16, colors.(pairs{k, 1}), 'o', 'filled', ...
         'MarkerFaceAlpha', 0.75, 'DisplayName', 'training roads');
-    scatter(ax, r.a_w_measured(~train), r.(['a_w_' pairs{k, 1}])(~train), 30, colors.(pairs{k, 1}), 'd', ...
+    held = r.split == "eval";
+    scatter(ax, r.a_w_measured(held), r.(['a_w_' pairs{k, 1}])(held), 30, colors.(pairs{k, 1}), 'd', ...
         'LineWidth', 1.1, 'DisplayName', 'evaluation roads (held out)');
     set(ax, 'XScale', 'log', 'YScale', 'log');
     axis(ax, 'square');
@@ -127,7 +128,7 @@ for k = 1:numel(pick)
     xlim(ax, [0 s.t(end)]);
     ylabel(ax, 'm/s^2');
     title(ax, sprintf('%s (%s, %s): measured a_w %.3f, simulated %.3f (%+.0f %%), lag %+.2f s', ...
-        strrep(row.scenario, '_', '\_'), row.region, row.paper_split, row.a_w_measured, row.a_w_aligned, ...
+        strrep(row.scenario, '_', '\_'), row.region, row.split, row.a_w_measured, row.a_w_aligned, ...
         round(100 * row.error_aligned) + 0, row.lag_s), 'FontSize', 8);
     if k == 1
         lg = legend(ax, 'Box', 'off', 'FontSize', 7, 'NumColumns', 4);

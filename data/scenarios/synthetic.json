@@ -1,5 +1,5 @@
 {
-  "source": "Azab Abdelazim, M. (2026), Comfort-Aware Speed Planning over Road Anomalies: A Reinforcement-Learning Approach, TU Berlin, Tab. 3.3 (bump sizes) and Tab. 3.4 (pothole severity)",
+  "source": "Abdelazim, M. E. S. Azab (2026), Comfort-Aware Speed Planning over Road Anomalies: A Reinforcement-Learning Approach, TU Berlin, Tab. 3.3 (bump sizes) and Tab. 3.4 (pothole severity)",
   "defaults": {
     "flat_start_m": 40.0,
     "gap_m": 30.0,
