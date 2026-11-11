@@ -23,7 +23,7 @@ dx(10) = x(6);
 dx(11) = x(8);
 end
 
-function [F_susp, F_tire] = axle_force(susp, susp_vel, tyre, zr_dot, zw_vel, p)
+function [F_susp, F_tire] = axle_force(susp, susp_vel, tire, zr_dot, zw_vel, p)
 F_susp = p.k_S * susp + ride.core.suspension.spring_nonlin(susp, p) + ride.core.suspension.damper(susp_vel, p);
-F_tire = p.k_T * tyre + p.c_T * (zr_dot - zw_vel);
+F_tire = p.k_T * tire + p.c_T * (zr_dot - zw_vel);
 end
