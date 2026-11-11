@@ -92,7 +92,7 @@ If you use this software, please cite:
 
 To cite the software itself, use the Zenodo archive: [doi:10.5281/zenodo.23627533](https://doi.org/10.5281/zenodo.23627533). `CITATION.cff` has a machine-readable citation.
 
-## Acknowledgement
+## Acknowledgment
 
 - [CARD](https://huggingface.co/CARD-Data) for the recordings behind the measured roads
 - The [CALM](https://huggingface.co/CALM-Dataset) project, which this package belongs to
