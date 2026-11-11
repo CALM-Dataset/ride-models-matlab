@@ -1,6 +1,6 @@
 function p = assemble(node)
 p = struct();
-for group = {'tyre', 'spring', 'damper'}
+for group = {'tire', 'spring', 'damper'}
     values = node.(group{1});
     names = fieldnames(values);
     for j = 1:numel(names)

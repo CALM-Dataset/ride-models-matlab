@@ -15,7 +15,7 @@
   "axles": {
     "front": {
       "wheel_mass": 50.4,
-      "tyre": {
+      "tire": {
         "k_T": 262200.0,
         "c_T": 500.0
       },
@@ -39,7 +39,7 @@
     },
     "rear": {
       "wheel_mass": 50.4,
-      "tyre": {
+      "tire": {
         "k_T": 262200.0,
         "c_T": 500.0
       },
@@ -66,7 +66,7 @@
     "axles": {
       "front": {
         "wheel_mass": 50.4,
-        "tyre": {
+        "tire": {
           "k_T": 262200.0,
           "c_T": 500.0
         },
@@ -90,7 +90,7 @@
       },
       "rear": {
         "wheel_mass": 50.4,
-        "tyre": {
+        "tire": {
           "k_T": 262200.0,
           "c_T": 500.0
         },
