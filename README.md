@@ -88,7 +88,7 @@ Reference pages in the [wiki](https://github.com/CALM-Dataset/ride-models-matlab
 
 If you use this software, please cite:
 
-> Abdelazim, M. E. S. Azab, *Comfort-Aware Speed Planning over Road Anomalies: A Reinforcement-Learning Approach*, Bachelor's thesis, Technische Universität Berlin, 2026.
+> Abdelazim, M. E. S. Azab, *Comfort-Aware Speed Planning over Road Anomalies: A Reinforcement-Learning Approach*, Bachelor's thesis, Technische Universität Berlin, 2026. [doi:10.14279/depositonce-26841](https://doi.org/10.14279/depositonce-26841).
 
 To cite the software itself, use the Zenodo archive: [doi:10.5281/zenodo.23627533](https://doi.org/10.5281/zenodo.23627533). `CITATION.cff` has a machine-readable citation.
 
