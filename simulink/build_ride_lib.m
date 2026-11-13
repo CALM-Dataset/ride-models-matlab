@@ -32,7 +32,7 @@ names = {'m_W', 'k_T', 'c_T', 'k_S', 'dz_S_stat', 'dz_cmp', 'dz_rbd', 'f1_cmp', 
 end
 
 function prompts = axle_parameter_prompts()
-prompts = {'Wheel mass m_W [kg]', 'Tyre stiffness k_T [N/m]', 'Tyre damping c_T [N s/m]', ...
+prompts = {'Wheel mass m_W [kg]', 'Tire stiffness k_T [N/m]', 'Tire damping c_T [N s/m]', ...
     'Spring stiffness k_S [N/m]', 'Static spring deflection dz_S_stat [m]', 'Compression knee dz_cmp [m]', ...
     'Rebound knee dz_rbd [m]', 'Compression shape f1_cmp [-]', 'Compression rate f2_cmp [-]', ...
     'Rebound shape f1_rbd [-]', 'Rebound rate f2_rbd [-]', 'Spring force limit F_max [N]', ...
@@ -52,11 +52,11 @@ function add_axle(blk, position, values)
 new_subsystem(blk, position);
 in_zdot = put(blk, 'simulink/Sources/In1', 'zdot', [30 93 60 107]);
 in_vc = put(blk, 'simulink/Sources/In1', 'v_corner', [30 353 60 367], 'Port', '2');
-tyre_rate = put(blk, 'simulink/Math Operations/Sum', 'tyre rate', [130 85 150 115], 'Inputs', '+-', 'IconShape', 'round', 'ShowName', 'off');
-tyre_defl = put(blk, 'simulink/Continuous/Integrator', 'tyre deflection', [210 80 240 120]);
+tire_rate = put(blk, 'simulink/Math Operations/Sum', 'tire rate', [130 85 150 115], 'Inputs', '+-', 'IconShape', 'round', 'ShowName', 'off');
+tire_defl = put(blk, 'simulink/Continuous/Integrator', 'tire deflection', [210 80 240 120]);
 k_T = put(blk, 'simulink/Math Operations/Gain', 'k_T', [300 85 350 115], 'Gain', 'k_T');
 c_T = put(blk, 'simulink/Math Operations/Gain', 'c_T', [300 145 350 175], 'Gain', 'c_T');
-F_t = put(blk, 'simulink/Math Operations/Sum', 'tyre force', [410 115 430 145], 'Inputs', '++', 'IconShape', 'round', 'ShowName', 'off');
+F_t = put(blk, 'simulink/Math Operations/Sum', 'tire force', [410 115 430 145], 'Inputs', '++', 'IconShape', 'round', 'ShowName', 'off');
 net = put(blk, 'simulink/Math Operations/Sum', 'wheel force', [480 175 500 205], 'Inputs', '+-', 'IconShape', 'round', 'ShowName', 'off');
 inv_m = put(blk, 'simulink/Math Operations/Gain', 'inverse wheel mass', [550 175 600 205], 'Gain', '1/m_W');
 wheel_vel = put(blk, 'simulink/Continuous/Integrator', 'wheel velocity', [660 170 690 210]);
@@ -72,11 +72,11 @@ out_acc = put(blk, 'simulink/Sinks/Out1', 'z_W_ddot', [860 93 890 107], 'Port', 
 out_x = put(blk, 'simulink/Sinks/Out1', 'x', [860 283 890 297], 'Port', '3');
 set_function(spring, spring_code(), {'k_S', 'dz_S_stat', 'dz_cmp', 'dz_rbd', 'f1_cmp', 'f2_cmp', 'f1_rbd', 'f2_rbd', 'F_max'});
 set_function(damper, damper_code(), {'d1', 'z1', 'd2', 'z2', 'v_d', 'v_z'});
-wire(blk, in_zdot, 1, tyre_rate, 1, 'zdot');
-wire(blk, wheel_vel, 1, tyre_rate, 2);
-wire(blk, tyre_rate, 1, tyre_defl, 1);
-wire(blk, tyre_defl, 1, k_T, 1, 'x_T');
-wire(blk, tyre_rate, 1, c_T, 1);
+wire(blk, in_zdot, 1, tire_rate, 1, 'zdot');
+wire(blk, wheel_vel, 1, tire_rate, 2);
+wire(blk, tire_rate, 1, tire_defl, 1);
+wire(blk, tire_defl, 1, k_T, 1, 'x_T');
+wire(blk, tire_rate, 1, c_T, 1);
 wire(blk, k_T, 1, F_t, 1);
 wire(blk, c_T, 1, F_t, 2);
 wire(blk, F_t, 1, net, 1, 'F_T');
@@ -94,16 +94,16 @@ wire(blk, k_S, 1, F_s, 1);
 wire(blk, spring, 1, F_s, 2);
 wire(blk, damper, 1, F_s, 3);
 wire(blk, F_s, 1, out_F, 1);
-wire(blk, tyre_defl, 1, mux, 1);
+wire(blk, tire_defl, 1, mux, 1);
 wire(blk, wheel_vel, 1, mux, 2, 'v_W');
 wire(blk, susp_defl, 1, mux, 3);
 wire(blk, mux, 1, out_x, 1, 'x');
-note(blk, [30 20], 'SI units. x_T tyre deflection [m], x_S suspension deflection [m], v_W wheel velocity [m/s], F_T tyre force [N], F_S suspension force on the body [N].');
+note(blk, [30 20], 'SI units. x_T tire deflection [m], x_S suspension deflection [m], v_W wheel velocity [m/s], F_T tire force [N], F_S suspension force on the body [N].');
 mask = Simulink.Mask.create(blk);
 mask.Type = 'Axle';
-mask.Description = ['One axle: tyre spring and damper, wheel mass, progressive suspension spring and ', ...
+mask.Description = ['One axle: tire spring and damper, wheel mass, progressive suspension spring and ', ...
     'asymmetric damper. F_s is the suspension force on the body, positive upward. ', ...
-    'x = [tyre deflection; wheel velocity; suspension deflection].'];
+    'x = [tire deflection; wheel velocity; suspension deflection].'];
 add_axle_parameters(mask, '', values, '');
 mask.Initialization = 'c = ride.core.suspension.damper_coefficients(D, A); d1 = c.d1; z1 = c.z1; d2 = c.d2; z2 = c.z2;';
 mask.Display = sprintf('port_label(''input'', 1, ''zdot'');\nport_label(''input'', 2, ''v_corner'');\nport_label(''output'', 1, ''F_s'');\nport_label(''output'', 2, ''z_W_ddot'');\nport_label(''output'', 3, ''x'');');
@@ -149,7 +149,7 @@ mask = Simulink.Mask.create(blk);
 mask.Type = 'Quarter-car';
 mask.Description = ['Quarter-car ride model: one axle under a quarter of the body, heave only. ', ...
     'Input: road height rate under the wheel [m/s]. Outputs: body and wheel vertical acceleration [m/s^2] ', ...
-    'and the states x = [tyre deflection; wheel velocity; suspension deflection; body velocity; body position]. ', ...
+    'and the states x = [tire deflection; wheel velocity; suspension deflection; body velocity; body position]. ', ...
     'Defaults come from data/models/quartercar/params.json.'];
 mask.addDialogControl('Type', 'group', 'Name', 'body_group', 'Prompt', 'Body');
 mask.addDialogControl('Type', 'group', 'Name', 'axle_group', 'Prompt', 'Axle');
@@ -248,8 +248,8 @@ mask.Type = 'Half-car';
 mask.Description = ['Half-car ride model: two axles, body heave and pitch, load transfer from the longitudinal ', ...
     'acceleration a_x (pitch centre at h_T when a_x > 0, at h_B otherwise). Inputs: road height rate under the ', ...
     'front and the rear wheel [m/s] and a_x [m/s^2]. Outputs: body heave and pitch acceleration, front and rear ', ...
-    'wheel acceleration, and x = [rear tyre deflection; rear wheel velocity; rear suspension deflection; ', ...
-    'front tyre deflection; front wheel velocity; front suspension deflection; body velocity; pitch rate; ', ...
+    'wheel acceleration, and x = [rear tire deflection; rear wheel velocity; rear suspension deflection; ', ...
+    'front tire deflection; front wheel velocity; front suspension deflection; body velocity; pitch rate; ', ...
     'body position; pitch angle]. Defaults come from data/models/halfcar/params.json.'];
 mask.addDialogControl('Type', 'group', 'Name', 'body_group', 'Prompt', 'Body');
 mask.addDialogControl('Type', 'group', 'Name', 'front_group', 'Prompt', 'Front axle');
