@@ -34,6 +34,8 @@ preferred-citation:
   institution:
     name: Technische Universität Berlin
   year: 2026
+  doi: 10.14279/depositonce-26841
+  url: https://doi.org/10.14279/depositonce-26841
 references:
   - type: thesis
     title: "Kombinierte Betrachtung passiver und (semi-)aktiver Radaufhängungen mittels äquivalenter Fahrwerksparameter"
